@@ -1,0 +1,22 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="close" aria-label="Close" ng-click="closeThisDialog()"><span aria-hidden="true">&times;</span></div>
+            <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <label>Вопрос ?</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="confirm()">Ок</button>
+            <button class="btn btn-success" ng-click="confirm(true)">Да</button>
+            <button class="btn btn-danger" ng-click="confirm(false)">Нет</button>
+            <button class="btn btn-default" ng-click="closeThisDialog(true)">Отмена</button>
+            <button class="btn btn-default" ng-click="closeThisDialog()">Закрыть</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

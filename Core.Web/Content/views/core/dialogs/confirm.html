@@ -1,0 +1,14 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="close" ng-click="confirm()"><span aria-hidden="true">&times;</span></div>
+            <h4 class="modal-title" ng-bind-html="header"></h4>
+        </div>
+        <div class="modal-body" ng-bind-html="msg"></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success width100px" ng-bind-html="yes" ng-click="confirm(true)"></button>
+            <button type="button" class="btn btn-danger width100px" ng-bind-html="no" ng-click="confirm(false)"></button>
+            <button type="button" class="btn btn-default width100px" ng-bind-html="cancel" ng-if="canCancel" ng-click="confirm()"></button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+[
+	//#region css
+	{
+		"outputFileName": "Content/styles/ngDialog.min.css",
+		"inputFiles": [
+			"Content/styles/ngDialog.css"
+		]
+	},
+  {
+    "outputFileName": "Content/styles/core.min.css",
+    "inputFiles": [
+      "Content/styles/core.css"
+    ]
+  },
+	{
+		"minify": { "enabled": false },
+		"outputFileName": "Content/styles/core.all.min.css",
+		"inputFiles": [
+			"Content/styles/bootstrap.min.css",
+			"Content/styles/kendo.common.min.css",
+			"Content/styles/kendo.default.min.css",
+			"Content/styles/kendo.default.mobile.min.css",
+			"Content/styles/ngDialog.min.css",
+			"Content/styles/core.min.css"
+		]
+	},
+	//#endregion
+	//#region js
+  {
+    "minify": { "enabled": false },
+    "outputFileName": "Content/js/core.extensions.min.js",
+    "inputFiles": [
+      "Content/js/core.extensions.js"
+    ]
+  },
+  {
+    "minify": { "enabled": false },
+    "outputFileName": "Content/modules/core/dialogs.min.js",
+    "inputFiles": [
+      "Content/modules/core/dialogs.js"
+    ]
+  },
+	{
+		"minify": { "enabled": false },
+		"outputFileName": "Content/js/core.all.min.js",
+					"inputFiles": [
+						"Content/js/jquery.min.js",
+						"Content/js/bootstrap.min.js",
+						"Content/js/angular.min.js",
+						"Content/js/kendo.all.min.js",
+						"Content/js/cultures/kendo.culture.ru.min.js",
+						"Content/js/messages/kendo.messages.ru-RU.min.js",
+						"Content/js/angular-ui-router.min.js",
+            "Content/js/ngDialog.min.js",            
+            "Content/js/jszip.min.js",
+            "Content/js/linq.min.js",
+            "Content/js/core.extensions.min.js",
+            "Content/modules/core/dialogs.min.js"
+					]
+	}
+	//#endregion
+]

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7B5C3794-7DD0-4EE0-B8D0-E06CE3C841D5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="fastjson, Version=2.1.0.0, Culture=neutral, PublicKeyToken=6b75a806b86095cd, processorArchitecture=MSIL">
+      <HintPath>..\packages\fastJSON.2.1.21\lib\net40\fastjson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.7.0.3\lib\net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LightInject, Version=5.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.5.0.3\lib\net46\LightInject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LightInject.WebApi, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.WebApi.2.0.0\lib\net46\LightInject.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="linq2db, Version=1.8.2.0, Culture=neutral, PublicKeyToken=f19f8aed7feff67e, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.1.8.2\lib\net45\linq2db.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.8\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.1.608.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.1.608\lib\net46\StackExchange.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Caching\ICacheProvider.cs" />
+    <Compile Include="Caching\Redis\RedisCacheProvider.cs" />
+    <Compile Include="Internal\CoreUtils.cs" />
+    <Compile Include="Domain\CustomSequenceEntity.cs" />
+    <Compile Include="Domain\EntityBase.cs" />
+    <Compile Include="Dto\EntityDto.cs" />
+    <Compile Include="Dto\NamedEntityDto.cs" />
+    <Compile Include="Internal\Dependency\DependencyExtentions.cs" />
+    <Compile Include="Internal\Dependency\DependencyInitializer.cs" />
+    <Compile Include="Internal\Dependency\IAspNetDependency.cs" />
+    <Compile Include="Internal\Dependency\IDependency.cs" />
+    <Compile Include="Internal\Dependency\WebFormsPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Internal\Dependency\WebServiceBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Internal\ExceptionHandling\GlobalExceptionHandler.cs" />
+    <Compile Include="Internal\Kendo.DynamicLinq\Aggregate.cs" />
+    <Compile Include="Internal\Kendo.DynamicLinq\DataSourceRequest.cs" />
+    <Compile Include="Internal\Kendo.DynamicLinq\DataSourceRequestDto.cs" />
+    <Compile Include="Internal\Kendo.DynamicLinq\DataSourceResult.cs" />
+    <Compile Include="Internal\Kendo.DynamicLinq\Filter.cs" />
+    <Compile Include="Internal\Kendo.DynamicLinq\QueryableExtensions.cs" />
+    <Compile Include="Internal\Kendo.DynamicLinq\Sort.cs" />
+    <Compile Include="Internal\LinqToDB\DataConnectionFactory.cs" />
+    <Compile Include="Internal\LinqToDB\LinqToDBUtils.cs" />
+    <Compile Include="Internal\LinqToDB\MsSql.cs" />
+    <Compile Include="Log\Logger.cs" />
+    <Compile Include="Internal\Newtsoft.Json\Converters\ArrayOrSinglePropertyConverter.cs" />
+    <Compile Include="Internal\Newtsoft.Json\Converters\ddMMyyyy.cs" />
+    <Compile Include="Internal\Newtsoft.Json\Converters\ddMMyyyy_hhmmss.cs" />
+    <Compile Include="Internal\ReflectionUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AbstractEntityService.cs" />
+    <Compile Include="Internal\LinqToDB\CoreDataContext.cs" />
+    <Compile Include="Services\EntityServiceBase.cs" />
+    <Compile Include="Services\ReadonlyEntityServiceBase.cs" />
+    <Compile Include="Services\ServiceBase.cs" />
+    <Compile Include="Utils\CoreExtensions.cs" />
+    <Compile Include="Utils\LogicException.cs" />
+    <Compile Include="Validation\CustomAbstractValidator.cs" />
+    <Compile Include="Validation\SeverityEnum.cs" />
+    <Compile Include="Validation\ValidationFailureDto.cs" />
+    <Compile Include="Validation\ValidationFailureException.cs" />
+    <Compile Include="Validation\ValidationFailureListDto.cs" />
+    <Compile Include="Validation\ValidationUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Compile Include="Utils\CoreExtensions.Linq2Db.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Core.Fakes.Interfaces\Core.LinqToDB.Interfaces.csproj">
+      <Project>{6468de71-0af4-4bff-8271-406954b2adc7}</Project>
+      <Name>Core.LinqToDB.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\ServiceGen.Interfaces\ServiceGen.Interfaces.csproj">
+      <Project>{699970d6-194b-4c36-b927-718bc178f7fa}</Project>
+      <Name>ServiceGen.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

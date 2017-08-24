@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Weavers>
+  <Costura DisableCompression='true'
+           CreateTemporaryAssemblies='true'>
+    <!--<IncludeAssemblies>
+      RazorEngine
+    </IncludeAssemblies>-->
+  </Costura>
+</Weavers>

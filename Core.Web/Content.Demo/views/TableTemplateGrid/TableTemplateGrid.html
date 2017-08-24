@@ -1,0 +1,71 @@
+﻿<div class="container-fluid">
+    <div class="panel">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4>Таблица</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <button class="btn btn-danger" ng-click="getException()">необраб ошибка</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger" ng-click="getValidationException()">ошибка валидации</button>
+            </div>
+            <div class="col-md-2">
+                dsRead вызван {{dsReadCount}} раз
+            </div>
+            <div>
+                <input type="text" class="k-textbox"
+                       style="width: 150px;"
+                       onkeydown="return core.digitsOnly(this, event)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table kendo-grid options="mainGridOptions">
+                    <colgroup>
+                        <col class="width100px" />
+                        <col class="width100px" />
+                        <col />
+                        <col class="width100px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th data-field="DateFrom">
+                                Дата с
+                            </th>
+                            <th data-field="Rate">
+                                Ставка
+                            </th>
+                            <th>
+                                Комментарий
+                            </th>
+                            <th>
+                                Действие
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <script type="text/x-kendo-angular-template" id="row-template">
+                    <tr>
+                        <td>
+                            {{dataItem.DateFrom | date: "dd.MM.yyyy"}}
+                        </td>
+                        <td>
+                            <span ng-bind="dataItem.Rate.toLocaleString('ru-RU')"></span>
+                        </td>
+                        <td>
+                            Произвольный коммент :)
+                        </td>
+                        <td>
+                            <div class='btn btn-success btn-sm' ng-click="openEditDialog(dataItem)" title="Изменить"><span class='glyphicon glyphicon-edit '></span></div>
+                            <div class='btn btn-danger btn-sm' title="Удалить"><span class='glyphicon glyphicon-remove'></span></div>
+                        </td>
+
+                    </tr>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="close" aria-label="Close" ng-click="closeThisDialog()"><span aria-hidden="true">&times;</span></div>
+            <h4 class="modal-title">Редактировать запись</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-3">
+                    <label for="id">Id: </label>
+                </div>
+                <div class="col-xs-8">
+                    <input type="text" id='id' ng-value="curItem.Id" class="form-control" ng-readonly="true" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <label for="rate">Ставка: </label>
+                </div>
+                <div class="col-xs-8">
+                    <input type="text" id='rate' ng-model="curItem.Rate" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" ng-click="save()">Сохранить</button>
+            <button type="button" class="btn btn-default" ng-click="closeThisDialog()">Отменить</button>
+        </div>
+    </div>
+
+</div>

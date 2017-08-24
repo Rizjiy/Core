@@ -1,0 +1,7 @@
+К релизу 1.0.7
+- Удалить из проекта CN ссылку на linq.min.js
+- Изменить возвратное значение в core.dsRead с d на data
+
+1.2.0
+- CN SpecialActionEntityController пометить аттрибутом IgnoreServiceGenAttribute
+- удалить nuget пакет BundlerMinifie

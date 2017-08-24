@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:auto-ns1="http://www.w3.org/1999/xhtml" xmlns:tns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd" xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+<metadata>
+<id>Core</id>
+<version>1.1.8</version>
+<authors>rikhter</authors>
+<requireLicenseAcceptance>false</requireLicenseAcceptance>
+<description>Core package.</description>
+<dependencies>
+<group targetFramework=".NETFramework4.6.2">
+<dependency id="AutoMapper" version="6.1.0" />
+<dependency id="LightInject" version="5.0.3" />
+<dependency id="LightInject.WebApi" version="2.0.0" />
+<dependency id="linq2db" version="1.8.2" />
+<dependency id="linq2db.SqlServer" version="1.8.2" />
+<dependency id="linq2db.t4models" version="1.8.2" />
+<dependency id="Newtonsoft.Json" version="9.0.1" />
+<dependency id="FluentValidation" version="7.0.3" />
+<dependency id="fastJSON" version="2.1.21" />
+<dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.3" />
+<dependency id="Microsoft.AspNet.WebApi" version="5.2.3" />
+<dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
+<dependency id="Microsoft.AspNet.WebApi.WebHost" version="5.2.3" />
+<dependency id="System.Linq.Dynamic" version="1.0.7" />
+<dependency id="NLog" version="4.4.8" />
+</group>
+</dependencies>
+</metadata>
+<files>
+<file src="..\Core\bin\Release\Core.dll" target="lib\net462\Core.dll" />
+<file src="..\Core\bin\Release\Core.pdb" target="lib\net462\Core.pdb" />
+<file src="..\Core\Caching\Redis\RedisCacheProvider.cs" target="src\Caching\Redis\RedisCacheProvider.cs" />
+<file src="..\Core\Caching\ICacheProvider.cs" target="src\Caching\ICacheProvider.cs" />
+<file src="..\Core\Domain\CustomSequenceEntity.cs" target="src\Domain\CustomSequenceEntity.cs" />
+<file src="..\Core\Domain\EntityBase.cs" target="src\Domain\EntityBase.cs" />
+<file src="..\Core\Dto\EntityDto.cs" target="src\Dto\EntityDto.cs" />
+<file src="..\Core\Dto\NamedEntityDto.cs" target="src\Dto\NamedEntityDto.cs" />
+<file src="..\Core\Internal\Dependency\DependencyExtentions.cs" target="src\Internal\Dependency\DependencyExtentions.cs" />
+<file src="..\Core\Internal\Dependency\DependencyInitializer.cs" target="src\Internal\Dependency\DependencyInitializer.cs" />
+<file src="..\Core\Internal\Dependency\IAspNetDependency.cs" target="src\Internal\Dependency\IAspNetDependency.cs" />
+<file src="..\Core\Internal\Dependency\IDependency.cs" target="src\Internal\Dependency\IDependency.cs" />
+<file src="..\Core\Internal\Dependency\WebFormsPageBase.cs" target="src\Internal\Dependency\WebFormsPageBase.cs" />
+<file src="..\Core\Internal\Dependency\WebServiceBase.cs" target="src\Internal\Dependency\WebServiceBase.cs" />
+<file src="..\Core\Internal\ExceptionHandling\GlobalExceptionHandler.cs" target="src\Internal\ExceptionHandling\GlobalExceptionHandler.cs" />
+<file src="..\Core\Internal\Kendo.DynamicLinq\Aggregate.cs" target="src\Internal\Kendo.DynamicLinq\Aggregate.cs" />
+<file src="..\Core\Internal\Kendo.DynamicLinq\DataSourceRequest.cs" target="src\Internal\Kendo.DynamicLinq\DataSourceRequest.cs" />
+<file src="..\Core\Internal\Kendo.DynamicLinq\DataSourceRequestDto.cs" target="src\Internal\Kendo.DynamicLinq\DataSourceRequestDto.cs" />
+<file src="..\Core\Internal\Kendo.DynamicLinq\DataSourceResult.cs" target="src\Internal\Kendo.DynamicLinq\DataSourceResult.cs" />
+<file src="..\Core\Internal\Kendo.DynamicLinq\Filter.cs" target="src\Internal\Kendo.DynamicLinq\Filter.cs" />
+<file src="..\Core\Internal\Kendo.DynamicLinq\QueryableExtensions.cs" target="src\Internal\Kendo.DynamicLinq\QueryableExtensions.cs" />
+<file src="..\Core\Internal\Kendo.DynamicLinq\Sort.cs" target="src\Internal\Kendo.DynamicLinq\Sort.cs" />
+<file src="..\Core\Internal\LinqToDB\CoreDataContext.cs" target="src\Internal\LinqToDB\CoreDataContext.cs" />
+<file src="..\Core\Internal\LinqToDB\DataConnectionFactory.cs" target="src\Internal\LinqToDB\DataConnectionFactory.cs" />
+<file src="..\Core\Internal\LinqToDB\LinqToDBUtils.cs" target="src\Internal\LinqToDB\LinqToDBUtils.cs" />
+<file src="..\Core\Internal\LinqToDB\MsSql.cs" target="src\Internal\LinqToDB\MsSql.cs" />
+<file src="..\Core\Internal\Mapper\CoreAutomapper.cs" target="src\Internal\Mapper\CoreAutomapper.cs" />
+<file src="..\Core\Internal\Mapper\IMapperCore.cs" target="src\Internal\Mapper\IMapperCore.cs" />
+<file src="..\Core\Internal\Newtsoft.Json\Converters\ArrayOrSinglePropertyConverter.cs" target="src\Internal\Newtsoft.Json\Converters\ArrayOrSinglePropertyConverter.cs" />
+<file src="..\Core\Internal\Newtsoft.Json\Converters\ddMMyyyy.cs" target="src\Internal\Newtsoft.Json\Converters\ddMMyyyy.cs" />
+<file src="..\Core\Internal\Newtsoft.Json\Converters\ddMMyyyy_hhmmss.cs" target="src\Internal\Newtsoft.Json\Converters\ddMMyyyy_hhmmss.cs" />
+<file src="..\Core\Internal\CoreUtils.cs" target="src\Internal\CoreUtils.cs" />
+<file src="..\Core\Internal\ReflectionUtils.cs" target="src\Internal\ReflectionUtils.cs" />
+<file src="..\Core\Log\Logger.cs" target="src\Log\Logger.cs" />
+<file src="..\Core\Services\AbstractEntityService.cs" target="src\Services\AbstractEntityService.cs" />
+<file src="..\Core\Services\EntityServiceBase.cs" target="src\Services\EntityServiceBase.cs" />
+<file src="..\Core\Services\ReadonlyEntityServiceBase.cs" target="src\Services\ReadonlyEntityServiceBase.cs" />
+<file src="..\Core\Services\ServiceBase.cs" target="src\Services\ServiceBase.cs" />
+<file src="..\Core\Utils\CoreExtensions.cs" target="src\Utils\CoreExtensions.cs" />
+<file src="..\Core\Utils\CoreExtensions.Linq2Db.cs" target="src\Utils\CoreExtensions.Linq2Db.cs" />
+<file src="..\Core\Utils\LogicException.cs" target="src\Utils\LogicException.cs" />
+<file src="..\Core\Validation\CustomAbstractValidator.cs" target="src\Validation\CustomAbstractValidator.cs" />
+<file src="..\Core\Validation\SeverityEnum.cs" target="src\Validation\SeverityEnum.cs" />
+<file src="..\Core\Validation\ValidationFailureDto.cs" target="src\Validation\ValidationFailureDto.cs" />
+<file src="..\Core\Validation\ValidationFailureException.cs" target="src\Validation\ValidationFailureException.cs" />
+<file src="..\Core\Validation\ValidationFailureListDto.cs" target="src\Validation\ValidationFailureListDto.cs" />
+<file src="..\Core\Validation\ValidationUtils.cs" target="src\Validation\ValidationUtils.cs" />
+</files>
+</package>

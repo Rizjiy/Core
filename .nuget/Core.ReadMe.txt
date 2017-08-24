@@ -1,0 +1,21 @@
+1.0.31
+- удалить CastAsDecimal
+- удалить CastAsDate
+
+1.0.33
+- удалить SqlReplace
+
+1.0.34
+- включить в проекты конфигурацию nLog
+
+1.0.35
+- 9087365 удалить хелперы VA - BL - BuisinessLayerLibrary - Helpers - MsSqlHelpers
+
+1.0.36
+- Заменить LogicException
+
+1.0.38
+- убрать CN/CN.Web/Services/KendoLinqGenerator.cs	
+
+1.1.0
+- ”брать C:\Projects\VA\BL\BusinessLayerLibrary\Core\Internal\Exception\NotFoundException.cs

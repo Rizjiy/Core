@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceGenConsole", "ServiceGenConsole\ServiceGenConsole.csproj", "{22A360E6-86FE-413F-86F1-BB2E22AFBEF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceGenTemplate", "ServiceGenTemplate\ServiceGenTemplate.csproj", "{9F91577C-B795-4C1C-B07C-6035D2413A82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonInterfaces", "CommonInterfaces\CommonInterfaces.csproj", "{01994AAD-62EB-4184-BF04-30A73C028AEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22A360E6-86FE-413F-86F1-BB2E22AFBEF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22A360E6-86FE-413F-86F1-BB2E22AFBEF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22A360E6-86FE-413F-86F1-BB2E22AFBEF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22A360E6-86FE-413F-86F1-BB2E22AFBEF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F91577C-B795-4C1C-B07C-6035D2413A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F91577C-B795-4C1C-B07C-6035D2413A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F91577C-B795-4C1C-B07C-6035D2413A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F91577C-B795-4C1C-B07C-6035D2413A82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01994AAD-62EB-4184-BF04-30A73C028AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01994AAD-62EB-4184-BF04-30A73C028AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01994AAD-62EB-4184-BF04-30A73C028AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01994AAD-62EB-4184-BF04-30A73C028AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
