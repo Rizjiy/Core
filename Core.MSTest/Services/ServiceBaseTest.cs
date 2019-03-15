@@ -26,7 +26,7 @@ namespace Core.MSTest.Services
                     initWorks = true;
                 Assert.IsNotNull(dbConfig);
                 Assert.IsNotNull(container);
-                Console.WriteLine($"{typeof(Core.Services.ServiceBase).Namespace}{nameof(DependencyInitializer.Init)}(); ManagedThreadId=={Thread.CurrentThread.ManagedThreadId}");
+                Console.WriteLine($"{typeof(Core.Services.LegacyServiceBase).Namespace}{nameof(DependencyInitializer.Init)}(); ManagedThreadId=={Thread.CurrentThread.ManagedThreadId}");
             });
             Assert.IsTrue(initWorks);
         }

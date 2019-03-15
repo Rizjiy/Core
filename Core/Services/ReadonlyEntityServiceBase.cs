@@ -1,16 +1,16 @@
-﻿using System;
-using System.Linq;
-using AutoMapper;
-using Core.Domain;
+﻿using Core.Domain;
 using Core.Dto;
 using Core.Internal.Kendo.DynamicLinq;
 using LinqToDB;
+using System;
+using System.Linq;
 
 namespace Core.Services
 {
-    public abstract class ReadonlyEntityServiceBase<TEntity, TListDto, TFilterDto, TEntityDto> : EntityServiceBase<TEntity>
+    [Obsolete("Используйте новый тип сервиса только для чтения ReadonlyServiceBase.") ]
+    public abstract class ReadonlyEntityServiceBase<TEntity, TListDto, TFilterDto, TEntityDto> : LegacyEntityServiceBase<TEntity>
         where TEntity : EntityBase, new()
-        where TListDto : class
+        where TListDto : BaseListDto, new()
         where TFilterDto: class, new()
         where TEntityDto: EntityDto, new()
     {
@@ -19,7 +19,10 @@ namespace Core.Services
         /// Проекция данных в дто при запросе списка.
         /// </summary>
         /// <returns>Возвращает проекцию дто-объекта из списка.</returns>
-        protected abstract System.Linq.Expressions.Expression<Func<TEntity, TListDto>> Projection();
+        protected virtual System.Linq.Expressions.Expression<Func<TEntity, TListDto>> Projection()
+        {
+            return null;
+        }
 
         /// <summary>
         ///  Позволяет наложить дополнительные фильтры на запрос ДО получения проекции.
@@ -57,7 +60,11 @@ namespace Core.Services
             query = QueryCustomFilters(query, request.FilterDto);
 
             // Получение проекции.
-            var queryList = query.Select(Projection());
+            var projection = Projection();
+
+            var queryList = projection != null
+                                ? query.Select(projection)
+                                : Mapper.ProjectTo<TListDto>(query);
 
             // Накладываем кастомные фильтры
             queryList = QueryCustomFilters(queryList, request.FilterDto);
@@ -66,6 +73,16 @@ namespace Core.Services
             var dsResult = queryList.ToDataSourceResult(request);
 
             return dsResult;
+        }
+
+        /// <summary>
+        /// Загружает данные по идентификатору из базы в TEntityDto.
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
+        /// <returns>Заполненое dto или null</returns>
+        public virtual TEntityDto LoadDtoOrNull(int id)
+        {
+            return LoadDtoOrNull<TEntityDto, TEntity>(id);
         }
 
     }

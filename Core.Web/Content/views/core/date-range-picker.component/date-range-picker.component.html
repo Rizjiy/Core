@@ -1,0 +1,17 @@
+﻿<div class="form-inline form-group input-group">
+        <div class="form-group input-group" style="margin: 0 0 0 0" >
+            <span class="input-group-addon">
+                c:
+            </span>
+            <input kendo-datepicker options="vm.startPeriodOptions" k-ng-model="vm.startDate"  k-on-change= "vm.onChange()"/>
+        </div>
+
+        <div class="navbar-form input-group" style="margin: 0 0 0 0">
+            <span class="input-group-addon">
+                по:
+            </span>
+            <input kendo-datepicker options="vm.endPeriodOptions" k-ng-model="vm.endDate"  k-on-change= "vm.onChange()"/>
+        </div>
+
+        <p class="bg-danger" ng-show="vm.periodIsIncorrect()">Неверно задан интервал</p>
+</div>

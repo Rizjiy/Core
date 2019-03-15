@@ -1,7 +1,8 @@
-﻿using ServiceGen.Interfaces;
+﻿using Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
@@ -24,13 +25,16 @@ namespace ServiceGenConsole.Models
 
         public string Params { get; set; }
 
-        public bool IsDsRead { get; set; }
+        public FunctionType FunctionType { get; set; }
 
         public ApiMethodModel(ApiDescription apiDescription)
         {
             Method = apiDescription.HttpMethod.Method;
             MethodName = (apiDescription.ActionDescriptor as ReflectedHttpActionDescriptor)?.MethodInfo.Name;
-            Url = apiDescription.RelativePath;
+
+            int urlLenth = apiDescription.RelativePath.IndexOf('?') == -1 ? apiDescription.RelativePath.Length : apiDescription.RelativePath.IndexOf('?');
+            Url = apiDescription.RelativePath.Substring(0, urlLenth); //отсекли параметры
+
             ControllerName = apiDescription.ActionDescriptor.ControllerDescriptor.ControllerName;
             ActionName = apiDescription.ActionDescriptor.ActionName;
             ParameterDescriptions = apiDescription.ParameterDescriptions;
@@ -38,22 +42,27 @@ namespace ServiceGenConsole.Models
             var parList = new List<string>();
             foreach (var parameter in ParameterDescriptions.Where(p => p.Source == ApiParameterSource.FromUri))
             {
-
-                if (Url.Contains("{" + parameter.Name + "}"))
-                    Url = Url.Replace("{" + parameter.Name + "}", "");
-
                 parList.Add($"{parameter.Name}: {parameter.Name}");
             }
             if (parList.Any())
                 Params = "{" + $"{string.Join(",", parList)}" + "}";
             ParametersString = string.Join(", ", ParameterDescriptions.Select(p => p.Name));
 
-            //Определяем тип параметра, и если  это DataSourceRequest, то используем функцию dsRead(url, options, filter)
             var nonUriParam = ParameterDescriptions.FirstOrDefault(p => p.Source != ApiParameterSource.FromUri);
             if (nonUriParam != null)
             {
-                IsDsRead = typeof(IDataSourceRequest).IsAssignableFrom(nonUriParam.ParameterDescriptor.ParameterType);
-                //IsDsRead = nonUriParam.ParameterDescriptor.ParameterType.Name.Contains(Constants.DsReadParameterTypeName);
+                //Определяем тип параметра, и если  это DataSourceRequest, то используем функцию dsRead(url, options, filter)
+                if (typeof(IDataSourceRequest).IsAssignableFrom(nonUriParam.ParameterDescriptor.ParameterType))
+                {
+                    FunctionType = FunctionType.DsRead;
+                }
+
+                //Если тип возвращаемого параметра IHttpResponseFile, то загрузка файла методом core.dsDownload
+                if (typeof(IHttpResponseFile).IsAssignableFrom(apiDescription.ResponseDescription.DeclaredType))
+                {
+                    FunctionType = FunctionType.DsDownload;
+                }
+
                 NonUriParam = nonUriParam.Name;
             }
         }

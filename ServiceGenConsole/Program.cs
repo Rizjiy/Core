@@ -29,6 +29,7 @@ namespace ServiceGenConsole
         string outputFile
             )
         {
+            //пишем в дебаг параметрах: "DemoModule" "Core.Web.dll" "Services.js"
             //var stream = typeof(Program).Assembly.GetManifestResourceStream("ServiceGenConsole.Templates.NoModel.cshtml");
             //appModule = "DemoModule";
             //dllName = "Core.Web.dll";

@@ -1,5 +1,6 @@
 ﻿using Core.Internal.Dependency;
 using Core.Internal.LinqToDB;
+using Core.Services.Other;
 using LightInject;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -111,6 +112,7 @@ namespace Core.MSTest.Internal.LightInject
             container.Register<B>(new PerScopeLifetime());
 
             Task task;
+            Scope scope2;
 
             var scope1 = container.BeginScope();
             {
@@ -118,23 +120,125 @@ namespace Core.MSTest.Internal.LightInject
                 instance1.Scope = scope1;
 
                 //думаю, что scope2 будет дочерним
-                var scope2 = container.BeginScope();
+                scope2 = container.BeginScope();
 
                 task = new TaskFactory(TaskCreationOptions.LongRunning, TaskContinuationOptions.LongRunning).StartNew(() =>
                 {
                     Thread.Sleep(1000);
+                    //ошибка - скоп создан в другом треде
                     var instance2 = container.GetInstance<B>();
                 });
 
                 //Здесь должна быть ошибка, потому что нельзя уничтожать объект с дочерним скопом
                 instance1.Dispose();
-                scope2.Dispose();
+                
+            }
+
+            task.Wait();
+            scope2.Dispose();
+
+        }
+
+        /// <summary>
+        /// При использовании метода BeginIndependentScope, скопы можно уничтожать независимо от их вложенности
+        /// </summary>
+        [TestMethod]
+        public void IndependentScopeTest()
+        {
+            var container = new ServiceContainer();
+            container.Register<WebFormsClass>(new PerScopeLifetime());
+            container.Register<B>(new PerScopeLifetime());
+
+            Task task;
+
+            using (var scope1 = container.BeginScope())
+            {
+                var instance1 = container.GetInstance<WebFormsClass>();
+                instance1.Scope = scope1;
+
+                task = Task.Factory.StartNew(() =>
+                {
+                    //Создаем независимый скоп
+                    using (container.BeginIndependentScope())
+                    {
+                        Thread.Sleep(1000);
+                        var instance2 = container.GetInstance<B>();
+                    }
+                });
+
+                instance1.Dispose();
             }
 
             task.Wait();
 
         }
 
+        /// <summary>
+        /// При использовании AsyncService, скопы можно уничтожать независимо от их вложенности
+        /// </summary>
+        [TestMethod]
+        public void AsyncServiceTest()
+        {
+            var container = new ServiceContainer();
+            container.RegisterInstance<IServiceContainer>(container);
+            container.Register<WebFormsClass>(new PerScopeLifetime());
+            container.Register<B>(new PerScopeLifetime());
+            container.Register<AsyncService>(new PerScopeLifetime());
+
+            Task task;
+
+            using (var scope1 = container.BeginScope())
+            {
+                var instance1 = container.GetInstance<WebFormsClass>();
+                instance1.Scope = scope1;
+
+                var asyncService = container.GetInstance<AsyncService>();
+
+                task = asyncService.RunAsync<B>(b => 
+                {
+                    Thread.Sleep(1000);
+                });
+
+                instance1.Dispose();
+            }
+
+            task.Wait();
+
+        }
+
+        /// <summary>
+        /// При использовании AsyncService, скопы можно уничтожать независимо от их вложенности
+        /// </summary>
+        [TestMethod]
+        public void AsyncServiceTest2()
+        {
+            var container = new ServiceContainer();
+            container.RegisterInstance<IServiceContainer>(container);
+            container.Register<WebFormsClass>(new PerScopeLifetime());
+            container.Register<B>(new PerScopeLifetime());
+            container.Register<AsyncService>(new PerScopeLifetime());
+
+            Task task;
+
+            using (var scope1 = container.BeginScope())
+            {
+                var instance1 = container.GetInstance<WebFormsClass>();
+                instance1.Scope = scope1;
+
+                var asyncService = container.GetInstance<AsyncService>();
+
+                task = asyncService.RunAsync(c =>
+                {
+                    Thread.Sleep(1000);
+                    var instance2 = c.GetInstance<B>();
+                });
+
+                instance1.Dispose();
+            }
+
+            task.Wait();
+
+        }
 
 
         public class A: IDisposable
@@ -157,7 +261,6 @@ namespace Core.MSTest.Internal.LightInject
         {
             public IServiceContainer ContainerDi { get; set; }
             public Scope Scope { get; set; }
-            public DataConnectionFactory ConnectionFactory { get; set; }
 
             public void Dispose()
             {

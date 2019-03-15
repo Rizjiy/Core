@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using LinqToDB.Data;
 using LinqToDB.Mapping;
 
-namespace Core.LinqToDB.Interfaces
+namespace Core.Services
 {
     public interface IDataConnection
     {
@@ -14,9 +14,9 @@ namespace Core.LinqToDB.Interfaces
 
         DataConnectionTransaction BeginTransaction();
         DataConnectionTransaction BeginTransaction(IsolationLevel isolationLevel);
-        BulkCopyRowsCopied BulkCopy<T>(BulkCopyOptions options, IEnumerable<T> source);
-        BulkCopyRowsCopied BulkCopy<T>(IEnumerable<T> source);
-        BulkCopyRowsCopied BulkCopy<T>(int maxBatchSize, IEnumerable<T> source);
+        BulkCopyRowsCopied BulkCopy<T>(BulkCopyOptions options, IEnumerable<T> source) where T: class;
+        BulkCopyRowsCopied BulkCopy<T>(IEnumerable<T> source) where T: class;
+        BulkCopyRowsCopied BulkCopy<T>(int maxBatchSize, IEnumerable<T> source) where T : class;
         void CommitTransaction();
         int Delete<T>(T obj);
         void Dispose();

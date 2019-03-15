@@ -789,6 +789,44 @@ core.intializeApplicationBase = function (that, $rootScope, $window, $http, $sta
         return deferred.promise;
     };
 
+    core.dsDownload = function (url, options, filter) {
+        var deferred = $q.defer();
+
+        options.data.filterDto = filter;
+
+        $http({
+            url: url,
+            method: "Post",
+            data: options.data,
+            responseType: "blob"
+        }).then(
+            function success(result) {
+                // подготавливаю данные, если надо
+                if (options.prepareData)
+                    options.prepareData(result.Items);
+                // PageResult<> -> OData
+                var dataResult = result.data;
+
+                var filename = result.headers('x-filename');
+
+                // готовим blob файл
+                var blob = new Blob([dataResult], { type: "application/octet-stream" });
+                // сохраняем файл из blob
+                saveAs(blob, filename);
+
+                // Сообщаю об успехе
+                deferred.resolve(result);
+            },
+            function error(result) {
+                // Сообщаю о неудаче
+                deferred.reject(result);
+            }
+            );
+
+        return deferred.promise;
+    };
+
+
 };
 
 core.wordByNumber = function (number, wordArray) {
@@ -970,11 +1008,11 @@ core.errorMessage = function (error, dialogs) {
     /// </summary>
     /// <param name="error" type="type"></param>
     var message = "";
-    if (error.status == 409 && error.data && error.data.Violations) {
-        var violations = error.data.Violations;
+    if (error.status == 409 && error.data && Array.isArray(error.data)) {
+        var errors = error.data;
 
-        for (var i = 0; i < violations.length; i++)
-            message += "<p>" + violations[i].Message + "</p>";
+        for (var i = 0; i < errors.length; i++)
+            message += "<p>" + errors[i].ErrorMessage + "</p>";
     }
     else if (!!error.data.Message)
         message += "<p>" + error.data.Message + "</p>";
@@ -984,6 +1022,55 @@ core.errorMessage = function (error, dialogs) {
     dialogs.error({ msg: message });
         
 }
+
+//Фукнция удаляет фильтр, сгенерированный кендошкой на основе каскадной связи. Необходимо для избежания путаницы в случае, когда то же самое поле передается в кастомном фильтре.
+core.RemoveFieldFromFilter = function RemoveFieldFromFilter(options, fieldName) {
+
+    if (options.data.filter == undefined)
+        return;
+
+    var enumerableFilters = Enumerable.From(options.data.filter.filters);
+
+    //SingleOrDefault нужен по причине что искомое поле может уже отсутствовать в фильтре. 
+    //Такое возможно, если дочерний датасорс вызывается повторно, но родительский датасорс не менялся (например, в случае если клиент выполняет текстовый поиск в дочернем элементе). 
+    //Подозреваю дело в том, что мы уже удаляем фильтр в предыдущем вызове дочернего датасорса.
+    var itemToRemove = enumerableFilters.SingleOrDefault(null, function (f) {
+        return f.field === fieldName;
+    });
+
+    var dictionaryFilters = enumerableFilters.ToDictionary();
+    dictionaryFilters.Remove(itemToRemove);
+
+    var arrayAfterRemove = dictionaryFilters.ToEnumerable().Select("s => s.Key").ToArray();
+
+    options.data.filter.filters = arrayAfterRemove;
+};
+
+//Если showErrorDialog == true, то добавляет логику отображения сообщения об ошибке в случае, когда promise окончился ошибкой
+function addShowErrorDialogCatch(promise, showErrorDialog, dialogs) {
+    if (showErrorDialog)
+        promise.catch(
+            function (error) {
+                core.errorMessage(error, dialogs);
+            });
+};
+
+//Выставляет флаг "inProgress" для блокировки элементов интерфйса
+function disabledButtons(promise, $scope) {
+    if ($scope != undefined) {
+        $scope.inProgress = true;
+
+        promise.then(
+            function () {
+                $scope.inProgress = false;
+            });
+        promise.catch(
+            function () {
+                $scope.inProgress = false;
+            });
+    }
+};
+
 
 //#region Polyfills
 
@@ -1002,6 +1089,19 @@ $.postJSON = function (url, data, success, error) {
     });
 };
 
+//метод для подстановки значений аргументов в строковые переменные типа "my value {0} is:{1}".format(name, val)
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g,
+            function (match, number) {
+                return typeof args[number] != 'undefined'
+                    ? args[number]
+                    : match;
+            });
+    };
+}
+
 if (!Array.isArray) {
     Array.isArray = function (arg) {
         /// <summary>
@@ -1012,9 +1112,6 @@ if (!Array.isArray) {
         return Object.prototype.toString.call(arg) === '[object Array]';
     };
 }
-
-//#endregion
-//#region Date extensions
 
 Date.prototype.addDays = function (days) {
     this.setDate(this.getDate() + days);
@@ -1028,6 +1125,20 @@ Date.prototype.toExport = function () {
     /// <returns type="string"></returns>
     var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
     return (new Date(this - tzoffset)).toISOString().slice(0, -1);
+}
+
+//возвращает текущую дату с установленными в 0 часами/минутами/секундами
+Date.prototype.withoutTime = function () {
+    var d = new Date(this);
+    d.setHours(0, 0, 0, 0);
+    return d;
+}
+
+//возвращает новый массив с уникальными значениями из текущего массива
+Array.prototype.unique = function () {
+    return this.filter(function (value, index, self) {
+        return self.indexOf(value) === index;
+    });
 }
 
 //#endregion

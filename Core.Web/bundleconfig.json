@@ -1,62 +1,85 @@
 [
-	//#region css
-	{
-		"outputFileName": "Content/styles/ngDialog.min.css",
-		"inputFiles": [
-			"Content/styles/ngDialog.css"
-		]
-	},
+  //#region css
+  {
+    "outputFileName": "Content/styles/ngDialog.min.css",
+    "inputFiles": [
+      "Content/styles/ngDialog.css"
+    ]
+  },
   {
     "outputFileName": "Content/styles/core.min.css",
     "inputFiles": [
       "Content/styles/core.css"
     ]
   },
-	{
-		"minify": { "enabled": false },
-		"outputFileName": "Content/styles/core.all.min.css",
-		"inputFiles": [
-			"Content/styles/bootstrap.min.css",
-			"Content/styles/kendo.common.min.css",
-			"Content/styles/kendo.default.min.css",
-			"Content/styles/kendo.default.mobile.min.css",
-			"Content/styles/ngDialog.min.css",
-			"Content/styles/core.min.css"
-		]
-	},
-	//#endregion
-	//#region js
   {
     "minify": { "enabled": false },
-    "outputFileName": "Content/js/core.extensions.min.js",
+    "outputFileName": "Content/styles/core.all.min.css",
     "inputFiles": [
-      "Content/js/core.extensions.js"
+      "Content/styles/ngDialog.min.css",
+      "Content/styles/core.min.css"
     ]
   },
+  //#endregion
+  //#region js
   {
     "minify": { "enabled": false },
-    "outputFileName": "Content/modules/core/dialogs.min.js",
+    "outputFileName": "Content/js/vender.all.min.js",
     "inputFiles": [
-      "Content/modules/core/dialogs.js"
+      "Content/js/jquery.min.js",
+      "Content/js/bootstrap.min.js",
+      "Content/js/angular.min.js",
+      "Content/js/angular-locale_ru-ru.js",
+      "Content/js/kendo.all.min.js",
+      "Content/js/cultures/kendo.culture.ru.min.js",
+      "Content/js/messages/kendo.messages.ru-RU.min.js",
+      "Content/js/angular-ui-router.min.js",
+      "Content/js/angular-sanitize.min.js",
+      "Content/js/ngDialog.min.js",
+      "Content/js/jszip.min.js",
+      "Content/js/linq.min.js",
+      "Content/js/FileSaver.min.js"
     ]
   },
-	{
-		"minify": { "enabled": false },
-		"outputFileName": "Content/js/core.all.min.js",
-					"inputFiles": [
-						"Content/js/jquery.min.js",
-						"Content/js/bootstrap.min.js",
-						"Content/js/angular.min.js",
-						"Content/js/kendo.all.min.js",
-						"Content/js/cultures/kendo.culture.ru.min.js",
-						"Content/js/messages/kendo.messages.ru-RU.min.js",
-						"Content/js/angular-ui-router.min.js",
-            "Content/js/ngDialog.min.js",            
-            "Content/js/jszip.min.js",
-            "Content/js/linq.min.js",
-            "Content/js/core.extensions.min.js",
-            "Content/modules/core/dialogs.min.js"
-					]
-	}
-	//#endregion
+
+  {
+    "minify": { "enabled": false },
+    "outputFileName": "Content/js/core.all.min.js",
+    "inputFiles": [
+      "Content/js/core.extensions.js",
+      "Content/modules/core/dialogs.js",
+      "Content/modules/core/CoreModule.js",
+      "Content/views/core/date-range-picker.component/date-range-picker.component.js"
+    ]
+  },
+  //#endregion
+
+  //#region Demo Project
+  {
+    "minify": { "enabled": false },
+    "outputFileName": "Content.Demo/styles/demo.all.min.css",
+    "inputFiles": [
+      "Content.Demo/styles/kendo/all.css",
+      "Content.Demo/styles/bootstrap/css/bootstrap.css",
+      "Content.Demo/styles/bootstrap/css/bootstrap-theme.css"
+    ]
+  },
+
+  {
+    "minify": { "enabled": false },
+    "outputFileName": "Content.Demo/modules/demo.all.min.js",
+    "inputFiles": [
+      "Content.Demo/modules/DemoModule.js",
+
+      "Content.Demo/services/Services.js",
+      "Content.Demo/services/WaitDialogService.js",
+
+      "Content.Demo/views/TableTemplateGrid/TableTemplateGrid.js",
+      "Content.Demo/views/TableTemplateGrid/EditDialog.js",
+      "Content.Demo/views/WaitDialog/WaitDialog.js",
+      "Content.Demo/views/ServiceGenTest/ServiceGenTest.js"
+    ]
+  }
+
+  //#endregion
 ]

@@ -8,23 +8,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>WebDO</title>
+    <title>CoreWeb Demo</title>
 
+<% AspxUtils.GetHashedLink("Content.Demo/styles/demo.all.min.css", "    <link href='/{0}' rel='stylesheet' />"); %> <%--Нельзя ставить после ngDialog.css - сыезжает диалоговое окно!--%>
 <% AspxUtils.BundleFiles("Content/styles/core.all.min.css", "    <link href='/{0}' rel='stylesheet' />", !AspxUtils.IsDebugConfiguration); %>
+<% AspxUtils.BundleFiles("Content/js/vender.all.min.js", "    <script src='/{0}'></script>", !AspxUtils.IsDebugConfiguration); %>
 <% AspxUtils.BundleFiles("Content/js/core.all.min.js", "    <script src='/{0}'></script>", !AspxUtils.IsDebugConfiguration); %>
-<% AspxUtils.GetHashedLink("Content/js/core.extensions.js", "    <script src='/{0}'></script>"); %>
-    <script src="modules/DemoModule.js"></script>
-
-    <script src="services/Services.js"></script>
-    <script src="services/WaitDialogService.js"></script>
-
-    <script src="views/Dialogs/DialogList.js"></script>  
-    <script src="views/TableTemplateGrid/TableTemplateGrid.js"></script>
-    <script src="views/TableTemplateGrid/EditDialog.js"></script>
-	<script src="views/WaitDialog/WaitDialog.js"></script>
+<% AspxUtils.BundleFiles("Content.Demo/modules/demo.all.min.js", "    <script src='/{0}'></script>", !AspxUtils.IsDebugConfiguration); %>
 
     <script>
-        core.rootUrl = "/Content/";
+        core.rootUrl = "";
     </script>
 
 </head>

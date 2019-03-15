@@ -1,33 +1,4 @@
-﻿/*bootstrap, kendo reset*/
-.k-block, .k-button, .k-textbox, .k-drag-clue, .k-touch-scrollbar, .k-window, .k-window-titleless .k-window-content, .k-window-action, .k-inline-block,
-.k-grid .k-filter-options, .k-grouping-header .k-group-indicator, .k-autocomplete, .k-multiselect, .k-combobox, .k-dropdown, .k-dropdown-wrap, .k-datepicker,
-.k-timepicker, .k-colorpicker, .k-datetimepicker, .k-numerictextbox, .k-picker-wrap, .k-numeric-wrap, .k-list-container.k-colorpicker, .k-calendar-container,
-.k-calendar td, .k-calendar .k-link, .k-treeview .k-in, .k-editor-inline, .k-tooltip, .k-tile, .k-slider-track, .k-slider-selection, .k-upload,
-.k-textbox > input, .k-autocomplete .k-input, .k-multiselect-wrap, .k-expand-padding.k-numeric-wrap .k-input,
-.k-state-border-up.k-calendar-container, .k-state-border-up.k-list-container, .k-state-border-up.k-autocomplete, .k-state-border-up.k-multiselect, .k-state-border-up.k-dropdown-wrap, .k-state-border-up.k-picker-wrap, .k-state-border-up.k-numeric-wrap, .k-window-content, .k-filter-menu,
-.k-list .k-state-hover, .k-list .k-state-focused, .k-list .k-state-highlight, .k-list .k-state-selected, .k-dropzone { border-radius: 4px; }
-/*.k-state-hover.k-header.k-multiselect { border-color: #ccc; }
-.k-multiselect-wrap .k-input { height: 1.8em; line-height: 1.5em; }
-.k-multiselect-wrap { min-height: 1.8em; }
-.k-state-default.k-autocomplete, .k-state-default.k-picker-wrap, .k-state-default.k-numeric-wrap, .k-state-default.k-dropdown-wrap { background: transparent none; }
-.k-autocomplete.k-state-hover, .k-picker-wrap.k-state-hover, .k-numeric-wrap.k-state-hover, .k-dropdown-wrap.k-state-hover { background-color: #ebebeb; background-image: none; background-position: 50% 50%; border-color: #adadad; }
-.k-button:hover, .k-button:focus, .k-button.k-state-focused, .k-textbox:hover, .k-state-hover, .k-state-hover:hover, .k-pager-wrap .k-link:hover, .k-other-month.k-state-hover .k-link, div.k-imagebrowser-dropzone em, .k-draghandle:hover { background: #ebebeb none; }
-.k-block, .k-header, .k-grid-header, .k-toolbar, .k-grouping-header, .k-pager-wrap, .k-button, .k-draghandle, html .km-pane-wrapper .k-header { background: transparent none; }
-.form-control { -webkit-box-shadow: none; box-shadow: none; }
-    .form-control:focus { -webkit-box-shadow: inset 0 1px 1px rgba(213, 147, 146, 0.075), 0 0 6px #c3cdd4; box-shadow: inset 0 1px 1px rgba(213, 147, 146, 0.075), 0 0 6px #c3cdd4; border: 1px solid #ccc; }
-.k-autocomplete.k-state-focused, .k-dropdown-wrap.k-state-focused, .k-picker-wrap.k-state-focused, .k-numeric-wrap.k-state-focused { -webkit-box-shadow: 0 0 7px 0 #c3cdd4; box-shadow: 0 0 7px 0 #c3cdd4; }
-.k-textbox, .k-autocomplete, .k-dropdown-wrap, .k-picker-wrap, .k-numeric-wrap { padding-right: 2.8em; }
-    .k-picker-wrap .k-select, .k-numeric-wrap .k-select, .k-dropdown-wrap .k-select { width: 2.8em; }
-.k-datetimepicker .k-select { width: 3.8em; }
-.k-calendar .k-state-selected.k-state-focused.k-state-hover { -webkit-box-shadow: none; box-shadow: none; }
-core-combo .input-group-btn .btn { font-size: 1em; padding: .45em .85em; }
-.k-picker-wrap .k-input, .k-dropdown-wrap .k-input, .k-numeric-wrap .k-input, .k-datetimepicker .k-input { padding: .25em 0; height: 1.8em; line-height: 1.8em; }
-.k-autocomplete { padding-right: 0; }
-.k-dropzone { padding: 0; }
-.k-widget.k-upload { border-width: 0;}
-/* стиль для задизабленной даты в kendo date picker  */
-/*.disabledDay { display: block; overflow: hidden; min-height: 22px; line-height: 22px; padding: 0 .45em 0 .1em; cursor: not-allowed; opacity: 0.5; }*/
-/*tooltips*/
+﻿
 div.iTooltip { display: none; overflow: hidden; width: 200px; padding: 10px; position: absolute; left: 15px; z-index: 99; margin-bottom: -40px; margin-top: 1px; color: white; text-align: justify; vertical-align: bottom; border: 1px #d9534f solid; border-radius: 5px; background: #d9534f; resize: none; top: 100%; }
     div.iTooltip:empty { display: none; }
 div.ittW1 { width: 100px; }
@@ -112,60 +83,42 @@ textarea.ittH3 { height: 100px; margin-bottom: -100px; }
 .iTooltip:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color: White; }
 .iTooltip::-moz-placeholder { /* Mozilla Firefox 19+ */ color: White; }
 .iTooltip:-ms-input-placeholder { /* Internet Explorer 10+ */ color: White; }
-/*core-multiselect*/
-.multiselect { width: 100%; }
-    .multiselect .k-multiselect { padding-right: 34px; }
-        .multiselect .k-multiselect.k-state-hover, core-combo .k-dropdown-wrap .k-select, .k-datepicker { background: #fff; }
-    .multiselect .k-multiselect-wrap { -webkit-box-shadow: none; box-shadow: none; }
-    .multiselect .btn { width: auto; position: absolute; top: 0; right: 0; }
-/*remove IE10 clear button (X in any INPUT)*/
-input[type=text]::-ms-clear { display: none; }
-/*core-combo*/
-core-combo .input-group-btn { font-size: 1em; }
-core-combo .btn { font-size: 1em; padding: .44em .8em; }
-core-combo .k-dropdown-wrap.k-state-focused, core-combo .k-state-focused > .k-select { border-color: #cccccc; }
-core-combo .k-dropdown-wrap { border-radius: 4px 0 0 4px; }
-    core-combo .k-dropdown-wrap .k-select { border-radius: 0; }
-object.hiddenObject { visibility: hidden; width: 0px; height: 0px; margin: 0px; padding: 0px; border-style: none; border-width: 0px; max-width: 0px; max-height: 0px; }
-.certRadioLabel { width: 100%; padding: 10px 0 0 0; }
-.certRadioText { border-style: solid; border-color: gray; border-width: 1px; width: 100%; padding: 5px; }
-    .certRadioText:hover { background-color: #D2EBF9; }
-.certRadioInput { display: none; }
-    .certRadioInput:checked + .certRadioText { background-color: #89CAED; }
-.signDocList a { overflow: hidden; text-overflow: ellipsis; display: block; }
-/* + coreSpinner + */
-/*
- *   Поддержка анимации для csspSpinner
- *   http://www.bootply.com/128062
- */
-.glyphicon-refresh-animate { -ms-animation: spin3 .7s infinite linear; -animation: spin .7s infinite linear; -webkit-animation: spin2 .7s infinite linear; }
 
-@-webkit-keyframes spin2 {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-    from { transform: scale(1) rotate(0deg); }
-    to { transform: scale(1) rotate(360deg); }
-}
-
-@-ms-keyframes spin3 {
-    0% { -ms-transform: rotate(0deg); }
-    100% { -ms-transform: rotate(360deg); }
-}
-/* - coreSpinner - */
-.preloader { background: url("ajax-loader.gif") 50% 50% no-repeat !important; font-size: 0 !important; }
-.modal_900 .modal-dialog { width: 900px; }
-.modal_1001 .modal-dialog { width: 1001px; }
 
 /* - Sizes - */
 .width-min50px { min-width: 50px; }
 .width-min100px { min-width: 100px; }
 .width-min150px { min-width: 150px; }
 .width-min250px { min-width: 250px; }
+.width-min450px { min-width: 450px; }
 
 .width50px { width: 50px; }
 .width100px { width: 100px; }
 .width150px { width: 150px; }
 .width250px { width: 250px; }
+.width450px { width: 450px; }
+
+/* скрывает "мусор" от ng-dialog снизу от окна  */
+.ngdialog-close {
+    display: none
+}
+
+/*отключаем глючный скролл, установленный стилями компонента ngdialog*/
+.ngdialog {
+    overflow: visible !important;
+}
+
+.modal-body {
+    /*устанавливаем фиксированную максимальную высоту тела диалога, исходя из текущей высоты окна*/
+    max-height: calc(100vh - 200px);
+    /*включаем правильный скролл на уровне тела бустрапного диалога*/
+    overflow-y: auto;
+}
+
+/* Делает неактивными гиперссылки */
+.not-active {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: black;
+}

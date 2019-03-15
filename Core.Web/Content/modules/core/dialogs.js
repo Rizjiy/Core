@@ -1,5 +1,10 @@
 ﻿
 angular.module("dialogs", ["ngDialog"])
+    .config(['ngDialogProvider', function (ngDialogProvider) {
+        ngDialogProvider.setDefaults({
+            closeByNavigation: true
+        });
+    }])
 	.factory("$dialogs", ["ngDialog", function (ngDialog) {
 	    return {
 
@@ -28,7 +33,7 @@ angular.module("dialogs", ["ngDialog"])
 	            /// <returns type="promise"></returns>
 
 	            return ngDialog.openConfirm({
-	                template: core.rootUrl + "views/core/dialogs/error.html",
+	                template: core.rootUrl + "/Content/views/core/dialogs/error.html",
 	                className: "modal-dialog",
 	                showClose: false,
 	                closeByDocument: (!!cfg && angular.isDefined(cfg.closeByDocument) ? cfg.closeByDocument : false),
@@ -55,7 +60,7 @@ angular.module("dialogs", ["ngDialog"])
 	            /// <returns type="promise"></returns>
 
 	        	return ngDialog.openConfirm({
-	        	    template: core.rootUrl + "views/core/dialogs/notify.html",
+	        	    template: core.rootUrl + "/Content/views/core/dialogs/notify.html",
 	                className: "modal-dialog",
 	                showClose: false,
 	                closeByDocument: (!!cfg && angular.isDefined(cfg.closeByDocument) ? cfg.closeByDocument : true),
@@ -76,7 +81,7 @@ angular.module("dialogs", ["ngDialog"])
 	        	/// <returns type="promise"></returns>
 
 	        	return ngDialog.open({
-	        	    template: core.rootUrl + "views/core/dialogs/wait.html",
+	        	    template: core.rootUrl + "/Content/views/core/dialogs/wait.html",
 	        		className: "modal-dialog",
 	        		showClose: false,
 	        		closeByEscape: false,
@@ -104,7 +109,7 @@ angular.module("dialogs", ["ngDialog"])
 	            /// <param name="cfg.cancel" type="string"> Текст кнопки "Отмена", если не указан - кнопка не отображается </param>
 	            /// <returns type="promise"></returns>
 	            return ngDialog.openConfirm({
-	                template: core.rootUrl + "views/core/dialogs/confirm.html",
+	                template: core.rootUrl + "/Content/views/core/dialogs/confirm.html",
 	                className: "modal-dialog",
 	                showClose: false,
 	                closeByDocument: (!!cfg && angular.isDefined(cfg.closeByDocument) ? cfg.closeByDocument : true),

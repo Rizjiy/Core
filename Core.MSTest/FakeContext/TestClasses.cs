@@ -59,7 +59,10 @@ namespace Core.MSTest.FakeContext
             entity.Rate = dto.Rate;
             entity.UserLog = dto.UserLog;
 
-            InsertOrUpdate(entity);
+            if (entity.Id == 0)
+                Insert(entity);
+            else
+                Update(entity);
 
             return entity;
         }
@@ -207,7 +210,7 @@ namespace Core.MSTest.FakeContext
 
     }
 
-    public class TaxRateForBankListDto : EntityDto
+    public class TaxRateForBankListDto : BaseListDto
     {
         public DateTime DateFrom { get; set; }
         public string Bik { get; set; }

@@ -23,36 +23,12 @@ namespace Core.MSTest.FakeContext
         Scope _scope;
         IServiceContainer _container;
 
-        public IServiceContainer container { get; set; }
-
         public TaxRateForBankEntityService Service { get; set; }
-
-        /// <summary>
-        /// Обычная инициализация IoC
-        /// </summary>
-        public void Init()
-        {
-            //нужен Ioc
-            new DependencyInitializer()
-                .TestMode(true)
-                .ForAssembly(GetType().Assembly)
-                .Init((dbConfig, container) =>
-                {
-                    dbConfig["Core.MSTest"] = "CN";
-
-                    _scope = container.BeginScope();
-
-                    container.InjectProperties(this);
-
-                    _container = container;
-                });
-
-
-        }
 
         /// <summary>
         /// Инициализация фейкоговог контекста
         /// </summary>
+        [TestInitialize]
         public void InitFake()
         {
             //нужен Ioc
@@ -147,53 +123,16 @@ namespace Core.MSTest.FakeContext
         }
 
         /// <summary>
-        /// Тест проверяет простой запрос из БД
-        /// </summary>
-        [TestMethod]
-        public void SimpleSelectTest()
-        {
-            Init();
-
-            //C БД контекстом
-            var queryDto = Service.GetQuery().Take(3);
-
-            Assert.AreEqual(3, queryDto.Count());
-
-        }
-
-        /// <summary>
         /// Простой тест на фейковых данных
         /// </summary>
         [TestMethod]
         public void SimpleSelectFakeTest()
         {
-            InitFake();
-
             var queryDto = Service.GetQuery().Take(3);
 
             Assert.AreEqual(3, queryDto.Count());
 
         }
-
-
-        /// <summary>
-        /// запрос к БД
-        /// </summary>
-        [TestMethod]
-        public void SelectTest()
-        {
-            Init();
-
-            var request = new DataSourceRequestDto<object>()
-            {
-                Take = 3
-            };
-
-            var queryDto = Service.GetBankQueryResultDto(request);
-
-            Assert.AreEqual(3, queryDto.Data.Count());
-        }
-
 
         /// <summary>
         /// запрос на фейках
@@ -201,8 +140,6 @@ namespace Core.MSTest.FakeContext
         [TestMethod]
         public void SelectFakeTest()
         {
-            InitFake();
-
             var request = new DataSourceRequestDto<object>()
             {
                 Take = 3
@@ -222,7 +159,6 @@ namespace Core.MSTest.FakeContext
         public void SelectDifficultFakeTest()
         {
             // Подготовка
-            InitFake();
 
             var request = new DataSourceRequestDto<TaxRateForBankFilterDto>()
             {
@@ -239,22 +175,19 @@ namespace Core.MSTest.FakeContext
             Assert.AreEqual(3, queryDto.Data.Count());
         }
 
+        /// <summary>
+        /// Транзакция должна игнорироваться
+        /// </summary>
         [TestMethod]
-        public void SelectLoadWithTest()
+        public void TransactionFakeTest()
         {
-            Init();
+            using (Service.DataContext.BeginTransaction())
+            {
+                var queryDto = Service.GetQuery().Take(3);
 
-            //Без LoadWith
-            var TaxRate = Service.GetQuery().FirstOrDefault();
-            Assert.IsNull(TaxRate.Bank);
-
-            //С LoadWith
-            var TaxRate2 = Service.GetQuery().LoadWith(e=>e.Bank).FirstOrDefault();
-            Assert.IsNotNull(TaxRate2.Bank);
-
+                Assert.AreEqual(3, queryDto.Count());
+            }
         }
 
-
     }
-
 }

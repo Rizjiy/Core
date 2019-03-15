@@ -19,3 +19,8 @@
 
 1.1.0
 - Убрать C:\Projects\VA\BL\BusinessLayerLibrary\Core\Internal\Exception\NotFoundException.cs
+
+1.1.9
+- Изменились нек. неймспейсы
+1.1.13
+- Заменить метод расширение для enum'ов DisplayName

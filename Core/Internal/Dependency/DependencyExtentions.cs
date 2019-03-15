@@ -29,9 +29,31 @@ namespace Core.Internal.Dependency
 				dependency.Scope.Dispose();
             else
             {
-                var log = dependency.ContainerDi?.GetInstance<Logger<IAspNetDependency>>();
-                log?.Fatal($"Метод FreeScope не уничтожил объект! Type: {dependency.GetType()} ChildScope: {dependency.Scope?.ChildScope}");
+                //var log = dependency.ContainerDi?.GetInstance<Logger<IAspNetDependency>>();
+                //log?.Fatal($"Метод FreeScope не уничтожил объект! Type: {dependency.GetType()} ChildScope: {dependency.Scope?.ChildScope}");
             }
 		}
-	}
+
+        /// <summary>
+        /// Создает независимый скоп. Переделан метод BeginScope оригинального фреймворка
+        /// </summary>
+        /// <param name="container"></param>
+        /// <returns></returns>
+        public static Scope BeginIndependentScope(this IServiceContainer container)
+        {
+            var scopeManager = container.ScopeManagerProvider.GetScopeManager(container);
+
+            var currentScope = scopeManager.CurrentScope;
+
+            var scope = new Scope(scopeManager, null);
+            //if (currentScope != null)
+            //{
+            //    currentScope.ChildScope = scope;
+            //}
+
+            scopeManager.CurrentScope = scope;
+            return scope;
+        }
+
+    }
 }

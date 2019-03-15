@@ -1,4 +1,4 @@
-﻿using ServiceGen.Interfaces;
+﻿using Core.Interfaces;
 using System.Collections.Generic;
 
 namespace Core.Internal.Kendo.DynamicLinq

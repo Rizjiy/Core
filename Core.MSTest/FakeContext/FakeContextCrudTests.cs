@@ -149,6 +149,39 @@ namespace Core.MSTest.FakeContext
         }
 
         /// <summary>
+        /// Тест проверяет запись сущности c Identity
+        /// </summary>
+        [TestMethod]
+        public void FakeInsertWithIdentityTest()
+        {
+            var entity = new TaxRateForBankEntity
+            {
+                Id = 0,
+                Bik = "333333333",
+                DateFrom = new DateTime(2017, 3, 1),
+                Rate = 0.3m,
+                UserLog = "testUser"
+            };
+
+            //Количество до
+            var oldCount = Service.GetQuery().Count();
+
+            //Инсертим сущность
+            Service.DataContext.InsertWithIdentity(entity);
+
+            //Ищем нашу сущность
+            var foundEntity = Service.GetQuery().FirstOrDefault(e => e.Id == 5);
+
+            //количество после
+            var newCount = Service.GetQuery().Count();
+
+            Assert.IsNotNull(foundEntity);
+            Assert.AreEqual(oldCount + 1, newCount);
+            Assert.AreEqual(entity.Bik, foundEntity.Bik);
+        }
+
+
+        /// <summary>
         /// Тест проверяет обновление сущности
         /// </summary>
         [TestMethod]

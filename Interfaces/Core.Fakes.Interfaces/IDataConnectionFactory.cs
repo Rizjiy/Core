@@ -1,4 +1,4 @@
-﻿namespace Core.LinqToDB.Interfaces
+﻿namespace Core.Services
 {
     public interface IDataConnectionFactory
     {

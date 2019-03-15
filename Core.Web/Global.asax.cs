@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Configuration;
 using System.Web;
 using System.Web.Http;
-using Core.Services;
+using Core.Caching.Implementation;
+using Core.Caching.Interface;
 using LightInject;
-using Core.Log;
 using Core.Internal.Dependency;
+using Core.Web.Cache;
 
 namespace Core.Web
 {
@@ -30,6 +30,11 @@ namespace Core.Web
             {
                 container.RegisterApiControllers();
                 container.EnableWebApi(GlobalConfiguration.Configuration);
+
+                container.Register<ICacheProvider, InMemoryCacheProvider>(new PerContainerLifetime());
+
+                //запуск постоянного автообновления кеша
+                container.GetInstance<UserCache>().SetIntervalUpdate(TimeSpan.FromSeconds(1));
 
             });
         }

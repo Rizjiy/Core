@@ -11,12 +11,10 @@ function ($scope, $http, $state, tableTemplateGridService, dep, $dialogs) {
                     dep.refresh();
                     $scope.closeThisDialog();
 
-                },
-                function (error) {
+                })
+                .catch(function (error) {
                     core.errorMessage(error, $dialogs);
-                }
-            );
-
+                });
         }
 
     }]);

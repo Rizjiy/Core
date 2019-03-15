@@ -13,6 +13,10 @@
                 <button class="btn btn-danger" ng-click="getValidationException()">ошибка валидации</button>
             </div>
             <div class="col-md-2">
+                <button class="btn btn-danger" ng-click="downloadExcel()">В Excel</button>
+            </div>
+
+            <div class="col-md-2">
                 dsRead вызван {{dsReadCount}} раз
             </div>
             <div>
@@ -22,30 +26,32 @@
             </div>
         </div>
         <div class="row">
+            Валидность {{isValid}} Выбранный период: с {{startDT}} по {{endDT}}
+        </div>
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <form class="navbar-form navbar-left">
+                    <date-range-picker start-date="startDT" end-date="endDT" is-valid="isValid"></date-range-picker>
+                    <button type="button" class="btn btn-default">Просто батон</button>
+                </form>
+            </nav>
+        </div>
+        <div class="row">
             <div class="col-xs-12">
                 <table kendo-grid options="mainGridOptions">
                     <colgroup>
                         <col class="width100px" />
                         <col class="width100px" />
-                        <col />
                         <col class="width100px" />
+                        <col class="width100px" />
+                        <col class="width100px" />
+                        <col class="width100px" />
+                        <col class="width100px" />
+                        <col class="width100px" />
+                        <col class="width100px" />
+                        <col />
                     </colgroup>
-                    <thead>
-                        <tr>
-                            <th data-field="DateFrom">
-                                Дата с
-                            </th>
-                            <th data-field="Rate">
-                                Ставка
-                            </th>
-                            <th>
-                                Комментарий
-                            </th>
-                            <th>
-                                Действие
-                            </th>
-                        </tr>
-                    </thead>
+
                 </table>
                 <script type="text/x-kendo-angular-template" id="row-template">
                     <tr>
@@ -54,6 +60,24 @@
                         </td>
                         <td>
                             <span ng-bind="dataItem.Rate.toLocaleString('ru-RU')"></span>
+                        </td>
+                        <td>
+                            {{dataItem.Rate}}
+                        </td>
+                        <td>
+                            {{dataItem.Rate | number}}
+                        </td>
+                        <td>
+                            {{dataItem.Rate | numberRu:4}}
+                        </td>
+                        <td>
+                            {{dataItem.Rate | numberRu:2}}
+                        </td>
+                        <td>
+                            {{dataItem.Rate | numberRu:0}}
+                        </td>
+                        <td>
+                            {{dataItem.Rate | numberRu}}
                         </td>
                         <td>
                             Произвольный коммент :)

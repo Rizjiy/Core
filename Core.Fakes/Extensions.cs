@@ -1,11 +1,6 @@
-﻿using Core.Internal.Dependency;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using LightInject;
-using Core.LinqToDB.Interfaces;
+using Core.Services;
 
 namespace Core.Fakes
 {
@@ -20,6 +15,17 @@ namespace Core.Fakes
         public static void SetTable<T>(this IServiceContainer container, IList<T> table)
         {
             container.RegisterInstance(table);
+        }
+
+        /// <summary>
+        /// Получить зарегистрированную коллекцию
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="container"></param>
+        /// <returns></returns>
+        public static IList<T> GetTable<T>(this IServiceContainer container)
+        {
+            return container.GetInstance<IList<T>>();
         }
 
         /// <summary>

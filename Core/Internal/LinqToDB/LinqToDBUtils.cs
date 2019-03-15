@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using Core.Domain;
-using LinqToDB.Mapping;
+﻿using Core.Domain;
 using Core.Utils;
+using LinqToDB.Mapping;
+using System;
+using System.Linq;
 
 namespace Core.Internal.LinqToDB
 {
@@ -68,5 +68,6 @@ namespace Core.Internal.LinqToDB
 
             return entity;
         }
-    }
+
+	}
 }

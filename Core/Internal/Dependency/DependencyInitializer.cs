@@ -2,9 +2,8 @@
 using AutoMapper.Configuration;
 using Core.Internal.ExceptionHandling;
 using Core.Internal.LinqToDB;
-using Core.LinqToDB.Interfaces;
-using Core.Log;
 using Core.Services;
+using Core.Log;
 using Core.Utils;
 using LightInject;
 using System;
@@ -13,10 +12,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
+using Core.Caching.Interface;
+using Core.Interfaces;
+using LinqToDB.Common;
+using Core.Ioc;
+using FluentValidation;
 
 namespace Core.Internal.Dependency
 {
@@ -47,7 +50,7 @@ namespace Core.Internal.Dependency
         /// <returns></returns>
         public DependencyInitializer TestMode(bool testMode)
         {
-            ServiceBase.TestMode = testMode;
+            LegacyServiceBase.TestMode = testMode;
             return this;
         }
 
@@ -70,22 +73,23 @@ namespace Core.Internal.Dependency
             //Регистрируем DataConnectionFactory
             container.Register<IDataConnectionFactory, DataConnectionFactory>(new PerScopeLifetime());
 
-            // Все остальные зависимости в Scope-режиме 
-            //container.SetDefaultLifetime<PerScopeLifetime>(); //Убираем и везде проставляем вручную
-
             // Регистрирую все возможные IDependency в домене
             new DependencyRegister().RegisterAssemblyDependencies(container, _assemblies);
 
             // Применяю частные настройки соединений к БД и режим работы IoC
-            doConfig(ServiceBase.NamespaceConnectionDict, container);
+            doConfig(LegacyServiceBase.NamespaceConnectionDict, container);
 
             // В тестовом режиме GlobalExceptionHandler не требуется
-            if (!ServiceBase.TestMode)
+            if (!LegacyServiceBase.TestMode)
             {
                 // Перехватчик ошибок для Api-контроллеров
                 GlobalConfiguration.Configuration.Services.Replace(typeof(IExceptionHandler),
                     container.GetInstance<GlobalExceptionHandler>());
             }
+
+            //без этой настройки sql для query с хинтами генерится некорректно (пропадают целые таблицы) а то и вовсе падает с экспешном.. 
+            //по совету https://github.com/linq2db/linq2db/issues/949
+            Configuration.Linq.OptimizeJoins = false;
         }
 
         /// <summary>
@@ -95,7 +99,8 @@ namespace Core.Internal.Dependency
         {
             private readonly ConcurrentStack<Type> _listOfNativeDependencies = new ConcurrentStack<Type>();
             private readonly ConcurrentStack<MethodInfo> _listOfCustomDependencies = new ConcurrentStack<MethodInfo>();
-            private readonly ConcurrentStack<Profile> _listOfMapperProfiles = new ConcurrentStack<Profile>();
+            private readonly ConcurrentStack<Type> _listOfMapperProfiles = new ConcurrentStack<Type>();
+            private readonly ConcurrentStack<Type> _listOfCaches = new ConcurrentStack<Type>();
 
             private void InternalProcessAssembly(Assembly ass)
             {
@@ -114,8 +119,12 @@ namespace Core.Internal.Dependency
                                 if (typeof(Profile).IsAssignableFrom(t))
                                 {
                                     //Это профиль автомаппера
-                                    var prof = (Profile)Activator.CreateInstance(t);
-                                    _listOfMapperProfiles.Push(prof);
+                                    _listOfMapperProfiles.Push(t);
+                                }
+                                else if (typeof(ICache).IsAssignableFrom(t))
+                                {
+                                    //Это кэш
+                                    _listOfCaches.Push(t);
                                 }
                                 else
                                 {
@@ -123,20 +132,25 @@ namespace Core.Internal.Dependency
                                     if (mi != null && mi.GetParameters().Length == 1)
                                         _listOfCustomDependencies.Push(mi);
                                     else
+                                    {
                                         _listOfNativeDependencies.Push(t);
+                                        
+                                    }
+
+
                                 }
                             }
                             catch (Exception ex)
                             {
                                 // Не удалось загрузить один из типов
-                                Debug.WriteLine($"{typeof(ServiceBase).Namespace}\r\n{ex}");
+                                Debug.WriteLine($"{typeof(LegacyServiceBase).Namespace}\r\n{ex}");
                             }
                         });
                 }
                 catch (Exception exception)
                 {
                     // Не удалось загрузить одну из связанных сборок
-                    Debug.WriteLine($"{typeof(ServiceBase).Namespace}\r\n{exception}");
+                    Debug.WriteLine($"{typeof(LegacyServiceBase).Namespace}\r\n{exception}");
                 }
             }
             private void InternalRegisterDependencies(IServiceContainer container)
@@ -146,12 +160,40 @@ namespace Core.Internal.Dependency
                 {
                     try
                     {
-                        container.Register(t, new PerScopeLifetime());
+                        //смотрим по атрибуту, с каким временем жизни надо регистрировать тип
+                        var registerAttr = t.GetCustomAttribute<RegisterAttribute>(false);
+                        var lifetime = registerAttr?.Lifetime ?? RegisterAttribute.DefaultLifetime;
+
+                        //получаем интерфейс для регистрации
+                        Type serviceType = registerAttr?.ServiceType;
+
+                        //Регистрируем от интерфейса
+                        if(serviceType!=null)
+                        {
+                            container.Register(serviceType, t, _lifetimeDict[lifetime]());
+                        }
+                        else
+                        {
+                            // Регестрируем сервисы как реализацию интерфейсов от которых они унаследованы
+                            t.GetInterfaces()
+                                .Where(i => !(i == typeof(IDependency) || i == typeof(IDisposable) || i == typeof(IValidator)))
+                                .ForEach(i =>
+                                    {
+                                        // Проверка по равенству наименований интерфейса и класса наслединка
+                                        // Пример - Интерфейс: ISomeLogic, Имя класса: SomeLogic
+                                        if(i.Name.StartsWith("I") && i.Name.Substring(1) == t.Name)
+                                            container.Register(i, t, _lifetimeDict[lifetime]());
+                                    }
+                                );
+                        }
+
+                        //регистрирую как самого себя в любом случае
+                        container.Register(t, _lifetimeDict[lifetime]());
                     }
                     catch (Exception ex)
                     {
                         // Не удалось зарегистрировать один из типов
-                        Debug.WriteLine($"{typeof(ServiceBase).Namespace}\r\n{ex}");
+                        Debug.WriteLine($"{typeof(LegacyServiceBase).Namespace}\r\n{ex}");
                     }
                 });
 
@@ -166,7 +208,7 @@ namespace Core.Internal.Dependency
                         catch (Exception exception)
                         {
                             // Не удалось исполнить частную регистрацию типа
-                            Debug.WriteLine($"{typeof(ServiceBase).Namespace}\r\n{exception}");
+                            Debug.WriteLine($"{typeof(LegacyServiceBase).Namespace}\r\n{exception}");
                         }
                     });
 
@@ -179,30 +221,41 @@ namespace Core.Internal.Dependency
                 catch (Exception ex)
                 {
                     // Не удалось зарегистрировать Automapper
-                    Debug.WriteLine($"{typeof(ServiceBase).Namespace}\r\n{ex}");
+                    Debug.WriteLine($"{typeof(LegacyServiceBase).Namespace}\r\n{ex}");
                 }
 
                 //Регистрирую логгер
                 try
                 {
-                    container.Register(typeof(Logger<>), new PerContainerLifetime());
+                    container.Register(typeof(Logger<>));
                 }
                 catch (Exception ex)
                 {
                     // Не удалось зарегистрировать логгер
-                    Debug.WriteLine($"{typeof(ServiceBase).Namespace}\r\n{ex}");
+                    Debug.WriteLine($"{typeof(LegacyServiceBase).Namespace}\r\n{ex}");
                 }
 
+                //регистрирую кэши
+                _listOfCaches.ForEach(t =>
+                {
+                    try
+                    {
+                        //каждый кэш - синглтон. За счет этого механизм автообновления (реализуемый в провайдере) всегда может получить доступ к кэшу. 
+                        //ps. todo: с этим можно поспорить, так что тут есть что еще обсудить..
+                        container.Register(t, new PerContainerLifetime());
+                    }
+                    catch (Exception ex)
+                    {
+                        // Не удалось зарегистрировать один из типов
+                        Debug.WriteLine($"{typeof(LegacyServiceBase).Namespace}\r\n{ex}");
+                    }
+                });
             }
 
-            private IMapper CreateMapper(IEnumerable<Profile> profiles)
+            private IMapper CreateMapper(IEnumerable<Type> profiles)
             {
                 var cfg = new MapperConfigurationExpression();
-
-                foreach (var profile in profiles)
-                {
-                    cfg.AddProfile(profile);
-                }
+                cfg.AddProfiles(profiles);
 
                 return new MapperConfiguration(cfg).CreateMapper();
             }
@@ -212,6 +265,7 @@ namespace Core.Internal.Dependency
                 _listOfNativeDependencies.Clear();
                 _listOfCustomDependencies.Clear();
                 _listOfMapperProfiles.Clear();
+                _listOfCaches.Clear();
             }
 
             public void RegisterAssemblyDependencies(IServiceContainer container, ICollection<Assembly> assemblies)
@@ -228,6 +282,16 @@ namespace Core.Internal.Dependency
 
 
         }
+
+        private static readonly Dictionary<Lifetime, Func<ILifetime>> _lifetimeDict = new Dictionary<Lifetime, Func<ILifetime>>
+        {
+            [Lifetime.Transient] = () => null,
+            [Lifetime.PerScope] = () => new PerScopeLifetime(),
+            [Lifetime.PerContainer] = () => new PerContainerLifetime(),
+        };
+        
+
+
 
     }
 }

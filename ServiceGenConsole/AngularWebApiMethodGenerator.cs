@@ -23,7 +23,6 @@ namespace ServiceGenConsole
             var apiExplorer = conf.Services.GetApiExplorer();
             var groupDescriptions =
                 apiExplorer.ApiDescriptions.
-                //Атрибут исключения. Возможно стоит подключить сборку, чтобы не хардкодить имена классов
                 Where(ad=>ad.ActionDescriptor.ControllerDescriptor.ControllerType.CustomAttributes.All(a => a.AttributeType != typeof(IgnoreServiceGenAttribute))).
                 Select(ad => new ApiMethodModel(ad))
                     .OrderBy(m => m.ControllerName)

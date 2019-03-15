@@ -15,6 +15,5 @@ namespace Core.Internal.Dependency
 	{
 		IServiceContainer ContainerDi { get; set; }
 		Scope Scope { get; set; }
-		DataConnectionFactory ConnectionFactory { get; set; }
 	}
 }

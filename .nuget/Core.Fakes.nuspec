@@ -2,22 +2,11 @@
 <package xmlns:auto-ns1="http://www.w3.org/1999/xhtml" xmlns:tns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd" xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 <metadata>
 <id>Core.Fakes</id>
-<version>0.0.87</version>
+<version>0.0.96</version>
 <authors>lukich</authors>
 <requireLicenseAcceptance>false</requireLicenseAcceptance>
 <description>Fakes for Linq2Db Context in Core by Rikhter project</description>
-<dependencies>
-<group targetFramework=".NETFramework4.6.2">
-<dependency id="linq2db" version="1.8.2" />
-<dependency id="Core" version="1.1.7" />
-</group>
-</dependencies>
+<dependencies><group targetFramework=".NETFramework4.6.2"><dependency id="Core" version="2.0.11" /></group></dependencies>
 </metadata>
-<files>
-<file src="..\Core.Fakes\bin\Release\Core.Fakes.pdb" target="lib\net462\Core.Fakes.pdb" />
-<file src="..\Core.Fakes\bin\Release\Core.Fakes.dll" target="lib\net462\Core.Fakes.dll" />
-<file src="..\Core.Fakes\DataConnectionFactoryFake.cs" target="src\DataConnectionFactoryFake.cs" />
-<file src="..\Core.Fakes\DataContextFake.cs" target="src\DataContextFake.cs" />
-<file src="..\Core.Fakes\Extensions.cs" target="src\Extensions.cs" />
-</files>
+<files><file src="..\Core.Fakes\bin\Release\Core.Fakes.pdb" target="lib\net462\Core.Fakes.pdb" /><file src="..\Core.Fakes\bin\Release\Core.Fakes.dll" target="lib\net462\Core.Fakes.dll" /><file src="..\Core.Fakes\bin\Release\Core.LinqToDB.Interfaces.pdb" target="lib\net462\Core.LinqToDB.Interfaces.pdb" /><file src="..\Core.Fakes\bin\Release\Core.LinqToDB.Interfaces.dll" target="lib\net462\Core.LinqToDB.Interfaces.dll" /><file src="..\Core.Fakes\bin\Release\Core.Interfaces.dll" target="lib\net462\Core.Interfaces.dll" /><file src="..\Core.Fakes\bin\Release\Core.Interfaces.pdb" target="lib\net462\Core.Interfaces.pdb" /><file src="..\Core.Fakes\DataConnectionFactoryFake.cs" target="src\DataConnectionFactoryFake.cs" /><file src="..\Core.Fakes\DataContextFake.cs" target="src\DataContextFake.cs" /><file src="..\Core.Fakes\Extensions.cs" target="src\Extensions.cs" /></files>
 </package>

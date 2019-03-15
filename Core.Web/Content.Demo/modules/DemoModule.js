@@ -1,7 +1,8 @@
-﻿var DemoModule = angular.module("DemoModule", ["ui.router", "kendo.directives", "dialogs"]);
+﻿var DemoModule = angular.module("DemoModule", ["coreModule"]);
 
-DemoModule.config(["$stateProvider", "$urlRouterProvider",
-    function ($stateProvider, $urlRouterProvider) {
+DemoModule.config(["$stateProvider", "$urlRouterProvider", "$locationProvider",
+    function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        $locationProvider.hashPrefix('');
     	$urlRouterProvider.otherwise("/table-template-grid");
         $stateProvider
             .state("Dialogs",
@@ -21,7 +22,13 @@ DemoModule.config(["$stateProvider", "$urlRouterProvider",
 			    url: "/wait-dialog",
 			    templateUrl: "views/WaitDialog/WaitDialog.html",
 			    controller: "WaitDialogController"
-			});
+            })
+			.state("ServiceGenTest",
+            {
+                url: "/service-gen-test",
+                templateUrl: "views/ServiceGenTest/ServiceGenTest.html",
+                controller: "ServiceGenTestController"
+            });
     }
 ]);
 

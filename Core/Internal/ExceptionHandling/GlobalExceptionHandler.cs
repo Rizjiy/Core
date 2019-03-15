@@ -15,6 +15,8 @@ using NLog;
 using System.Web;
 using System.Linq;
 using Core.Utils;
+using Core.Interfaces;
+using FluentValidation;
 
 namespace Core.Internal.ExceptionHandling
 {
@@ -42,7 +44,7 @@ namespace Core.Internal.ExceptionHandling
             logEventInfo.Properties["Request"] = fiddlerString;
             logEventInfo.Exception = ex;
 
-            var failureEx = ex as ValidationFailureException;
+            var failureEx = ex as ValidationException;
 
             if (failureEx != null)
             {
@@ -50,15 +52,15 @@ namespace Core.Internal.ExceptionHandling
                 logEventInfo.Level = NLog.LogLevel.Info;
 
                 var sb = new StringBuilder();
-                failureEx.FailureList.Violations.ForEach(e => 
+                failureEx.Errors.ForEach(e => 
                 {
-                    sb.AppendLine(e.Message);
+                    sb.AppendLine(e.ErrorMessage);
                 });
 
                 logEventInfo.Message = sb.ToString();
 
                 result.StatusCode = HttpStatusCode.Conflict; //409
-                result.Content = new StringContent(failureEx.FailureList.ToJson());
+                result.Content = new StringContent(failureEx.Errors.ToJson());
             }
             else
             {

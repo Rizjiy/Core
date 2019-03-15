@@ -1,0 +1,1 @@
+..\bin\debug\ServiceGenConsole.exe DemoModule ..\bin\debug\Core.Web.dll Services.js

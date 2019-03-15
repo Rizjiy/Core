@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\linq2db.t4models.2.6.3\build\linq2db.t4models.props" Condition="Exists('..\packages\linq2db.t4models.2.6.3\build\linq2db.t4models.props')" />
+  <Import Project="..\packages\linq2db.SqlServer.2.6.3\build\linq2db.SqlServer.props" Condition="Exists('..\packages\linq2db.SqlServer.2.6.3\build\linq2db.SqlServer.props')" />
+  <Import Project="..\packages\NUnit3TestAdapter.3.11.2\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.11.2\build\net35\NUnit3TestAdapter.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7BD54299-62FF-493A-92E4-15FE06555144}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core.NUnitTest</RootNamespace>
+    <AssemblyName>Core.NUnitTest</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="LightInject, Version=5.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.5.1.3\lib\net46\LightInject.dll</HintPath>
+    </Reference>
+    <Reference Include="linq2db, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.2.6.3\lib\net46\linq2db.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\CRUD\CrudEntity.cs" />
+    <Compile Include="Tests\CRUD\CrudTests.cs" />
+    <Compile Include="Tests\Extensions\EnumDisplayNameTests.cs" />
+    <Compile Include="Tests\Extensions\PersonEntityService.cs" />
+    <Compile Include="Tests\GetQueryResultDtoTests\CarEntity.cs" />
+    <Compile Include="Tests\GetQueryResultDtoTests\GetQueryResultDtoTests.cs" />
+    <Compile Include="Tests\LightInject\InterfaceRegistrationTests.cs" />
+    <Compile Include="Tests\LightInject\RegisterAttributeTests.cs" />
+    <Compile Include="Tests\CrudTests.cs" />
+    <Compile Include="Tests\LoadTests\BankCardTestEntityProfile.cs" />
+    <Compile Include="Tests\LoadTests\BankCardType.cs" />
+    <Compile Include="Tests\LoadTests\LoadDtoTests.cs" />
+    <Compile Include="Tests\LoadTests\Entities.cs" />
+    <Compile Include="Tests\Logging\LoggingEntity.cs" />
+    <Compile Include="Tests\Logging\LoggingEntityService.cs" />
+    <Compile Include="Tests\Logging\LoggingIdentityTests.cs" />
+    <Compile Include="Tests\Logging\LoggingTests.cs" />
+    <Compile Include="Tests\Logging\LoggingWithIdentityEntity.cs" />
+    <Compile Include="Tests\Mapper\MapperTest.cs" />
+    <Compile Include="Tests\Sequences\EntityUnIdEnity.cs" />
+    <Compile Include="Tests\Sequences\EuidSequenceTests.cs" />
+    <Compile Include="Tests\Extensions\SqlHintsTests.cs" />
+    <Compile Include="Tests\Sequences\PersonDto.cs" />
+    <Compile Include="Tests\Sequences\PersonEntity.cs" />
+    <Compile Include="Tests\Sequences\PersonEntityService.cs" />
+    <Compile Include="Tests\Sequences\PersonProfile.cs" />
+    <Compile Include="Tests\Sequences\TableEntity.cs" />
+    <Compile Include="Tests\Services\EntityDtoServiceBaseTests\EntityDtoServiceBaseTests.cs" />
+    <Compile Include="Tests\Services\EntityDtoServiceBaseTests\SmartPhoneDto.cs" />
+    <Compile Include="Tests\Services\EntityDtoServiceBaseTests\SmartPhoneEntity.cs" />
+    <Compile Include="Tests\Services\EntityDtoServiceBaseTests\SmartPhoneEntityDtoService.cs" />
+    <Compile Include="Tests\Services\EntityDtoServiceBaseTests\SmartPhoneEntityProfile.cs" />
+    <Compile Include="Tests\Services\EntityServiceBaseTests\AddressEntity.cs" />
+    <Compile Include="Tests\Services\EntityServiceBaseTests\AddressEntityService.cs" />
+    <Compile Include="Tests\Services\EntityServiceBaseTests\EntityServiceBaseTests.cs" />
+    <Compile Include="Tests\Services\LoadDtoOrNullTests.cs" />
+    <Compile Include="Tests\Services\TestDto.cs" />
+    <Compile Include="Tests\Services\TestEntity.cs" />
+    <Compile Include="Tests\Services\TestEntityService.cs" />
+    <Compile Include="Tests\Services\TestProfile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="LinqToDB.Templates\DataAnnotations.ttinclude" />
+    <None Include="LinqToDB.Templates\DataModel.ttinclude" />
+    <None Include="LinqToDB.Templates\EditableObject.ttinclude" />
+    <None Include="LinqToDB.Templates\Humanizer.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Access.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Access.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.DB2.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.DB2.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Firebird.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Firebird.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Informix.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Informix.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.MySql.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.MySql.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Oracle.Managed.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Oracle.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Oracle.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Oracle.x64.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Oracle.x86.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.PostgreSQL.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.PostgreSQL.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SapHana.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SapHana.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlCe.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlCe.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SQLite.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SQLite.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlServer.SqlTypes.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlServer.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.SqlServer.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Sybase.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Sybase.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.Tools.ttinclude" />
+    <None Include="LinqToDB.Templates\LinqToDB.ttinclude" />
+    <None Include="LinqToDB.Templates\MultipleFiles.ttinclude" />
+    <None Include="LinqToDB.Templates\NotifyDataErrorInfo.ttinclude" />
+    <None Include="LinqToDB.Templates\NotifyPropertyChanged.ttinclude" />
+    <None Include="LinqToDB.Templates\ObsoleteAttributes.ttinclude" />
+    <None Include="LinqToDB.Templates\PluralizationService.ttinclude" />
+    <None Include="LinqToDB.Templates\README.md" />
+    <None Include="LinqToDB.Templates\T4Model.ttinclude" />
+    <None Include="LinqToDB.Templates\Validation.ttinclude" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Fakes\Core.Fakes.csproj">
+      <Project>{d8a5fc14-718b-4d55-a800-74d65dff2e67}</Project>
+      <Name>Core.Fakes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{7b5c3794-7dd0-4ee0-b8d0-e06ce3c841d5}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Core.Fakes.Interfaces\Core.LinqToDB.Interfaces.csproj">
+      <Project>{6468DE71-0AF4-4BFF-8271-406954B2ADC7}</Project>
+      <Name>Core.LinqToDB.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Core.Interfaces\Core.Interfaces.csproj">
+      <Project>{3722aba6-f6b2-48ed-91f8-bb5c0e530900}</Project>
+      <Name>Core.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LinqToDB.Templates\CopyMe.Access.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.DB2.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.Firebird.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.Informix.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.MySql.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.Oracle.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.PostgreSQL.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.SapHana.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.SqlCe.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.SQLite.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.SqlServer.tt.txt" />
+    <Content Include="LinqToDB.Templates\CopyMe.Sybase.tt.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.11.2\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.11.2\build\net35\NUnit3TestAdapter.props'))" />
+    <Error Condition="!Exists('..\packages\linq2db.SqlServer.2.6.3\build\linq2db.SqlServer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\linq2db.SqlServer.2.6.3\build\linq2db.SqlServer.props'))" />
+    <Error Condition="!Exists('..\packages\linq2db.t4models.2.6.3\build\linq2db.t4models.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\linq2db.t4models.2.6.3\build\linq2db.t4models.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

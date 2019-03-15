@@ -1,23 +1,39 @@
-﻿using System;
-using Core.Domain;
+﻿using Core.Domain;
 using Core.Dto;
-using LinqToDB;
 
 namespace Core.Services
 {
     public abstract class AbstractEntityService<TEntity, TListDto, TFilterDto, TEntityDto> : ReadonlyEntityServiceBase<TEntity, TListDto, TFilterDto, TEntityDto>
         where TEntity : EntityBase, new()
-        where TListDto: EntityDto, new()
+        where TListDto: BaseListDto, new()
         where TFilterDto: class, new()
         where TEntityDto: EntityDto, new()
     {
-        
+
         /// <summary>
-        /// Получает сущность из Dto.
+        /// Сохраняет сущность полученную из Dto.
         /// </summary>
         /// <param name="dto">Дто-объект</param>
-        /// <returns>Сущность с примененными изменениями.</returns>
-        public abstract TEntity SaveDto(TEntityDto dto);
-    
+        /// <returns>Сохраненная сущность с применными изменениями.</returns>
+        public virtual TEntity SaveDto(TEntityDto dto)
+        {
+            var entity = LoadEntityOrNull(dto.Id);
+
+            if(entity == null)
+            {
+                Mapper.Map(dto, entity = CreateEntity());
+                entity.LogUser_Id = dto.LogUser_Id;
+                Insert(entity);
+            }
+            else
+            {
+                Mapper.Map(dto, entity);
+                entity.LogUser_Id = dto.LogUser_Id;
+                Update(entity);
+            }
+            
+            return entity;
+        }
+        
     }
 }

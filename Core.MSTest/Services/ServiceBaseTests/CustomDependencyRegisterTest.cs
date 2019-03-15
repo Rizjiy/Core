@@ -1,4 +1,5 @@
-﻿using Core.Internal.Dependency;
+﻿using Core.Interfaces;
+using Core.Internal.Dependency;
 using LightInject;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;

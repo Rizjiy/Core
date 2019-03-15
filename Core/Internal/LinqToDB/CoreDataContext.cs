@@ -1,14 +1,12 @@
-﻿using Core.LinqToDB.Interfaces;
+﻿using Core.Services;
 using LinqToDB;
+using LinqToDB.Common;
 using LinqToDB.Data;
-using LinqToDB.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Internal.LinqToDB
 {
@@ -21,7 +19,7 @@ namespace Core.Internal.LinqToDB
         /// <summary>
 		/// Соединение БД
 		/// </summary>
-		protected DataConnection _dataConnection;
+		public readonly DataConnection _dataConnection;
 
         #region DataConnection
 
@@ -41,7 +39,7 @@ namespace Core.Internal.LinqToDB
         public CoreDataContext(string connectionString)
         {
             _dataConnection = new DataConnection(connectionString);
-            _dataConnection.MappingSchema.ColumnComparisonOption = StringComparison.OrdinalIgnoreCase;
+            _dataConnection.MappingSchema.ColumnNameComparer = StringComparer.OrdinalIgnoreCase;
         }
 
         public IQueryable<T> GetTable<T>() where T : class
@@ -52,18 +50,6 @@ namespace Core.Internal.LinqToDB
 
         #region DataConnectionExtensions
 
-        public BulkCopyRowsCopied BulkCopy<T>(BulkCopyOptions options, IEnumerable<T> source)
-        {
-            return _dataConnection.BulkCopy<T>(options, source);
-        }
-        public BulkCopyRowsCopied BulkCopy<T>(IEnumerable<T> source)
-        {
-            return _dataConnection.BulkCopy<T>(source);
-        }
-        public BulkCopyRowsCopied BulkCopy<T>(int maxBatchSize, IEnumerable<T> source)
-        {
-            return _dataConnection.BulkCopy<T>(maxBatchSize, source);
-        }
         public T Execute<T>(string sql, object parameters)
         {
             return _dataConnection.Execute<T>(sql, parameters);
@@ -240,5 +226,19 @@ namespace Core.Internal.LinqToDB
             _dataConnection.Dispose();
         }
 
+        public BulkCopyRowsCopied BulkCopy<T>(BulkCopyOptions options, IEnumerable<T> source) where T: class
+        {
+            return _dataConnection.BulkCopy(options, source);
+        }
+
+        public BulkCopyRowsCopied BulkCopy<T>(IEnumerable<T> source) where T : class
+        {
+            return _dataConnection.BulkCopy(source);
+        }
+
+        public BulkCopyRowsCopied BulkCopy<T>(int maxBatchSize, IEnumerable<T> source) where T : class
+        {
+            return _dataConnection.BulkCopy(maxBatchSize, source);
+        }
     }
 }

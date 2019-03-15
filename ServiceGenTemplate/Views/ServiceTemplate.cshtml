@@ -1,59 +1,62 @@
 ﻿@using ServiceGenConsole.Models;
-
 @model AppDomainModel
-
-@* Если showErrorDialog == true, то добавляет логику отображения сообщения об ошибке в случае, когда promise окончился ошибкой *@
-function AddShowErrorDialogCatch(promise, showErrorDialog, dialogs) {
-    if (showErrorDialog)
-        promise.catch(
-            function (error) {
-                core.errorMessage(error, dialogs);
-            }
-        );
-};
-
 
 @foreach (var item in Model.Data)
 {
-@:  @{@Model.AppModule}.service("@{@item.Item1}Service", ["$http", "$dialogs",
-@:      function($http, $dialogs) {
-@:          return {
-                @* Определяет нужно ли отображать в случае ошибки соответствующий диалог. *@
-@:              ShowErrorDialog: true,
+    @:  @{@Model.AppModule}.service("@{@item.Item1}Service", ["$http", "$dialogs",
+    @:      function($http, $dialogs) {
+    @:          return {
+    @* Определяет нужно ли отображать в случае ошибки соответствующий диалог. *@
+    @:              ShowErrorDialog: true,
     foreach (var func in item.Item2)
     {
-        if (func.IsDsRead)
+        if (func.FunctionType == FunctionType.DsRead)
         {
-@:      @func.MethodName: function (options, filter) {
-@:          var promise = core.dsRead("/@func.Url", options, filter);
-            @* Обработка ошибок *@
-@:          AddShowErrorDialogCatch(promise, this.ShowErrorDialog, $dialogs);
-@:          return promise;
-@:        },
+            @:      @func.MethodName: function (options, filter, $scope) {
+            @:          var promise = core.dsRead("/@func.Url", options, filter);
+            @:          disabledButtons(promise, $scope);
+            @:          addShowErrorDialogCatch(promise, this.ShowErrorDialog, $dialogs);
+            @:          return promise;
+            @:      },
+        }
+        else if (func.FunctionType == FunctionType.DsDownload)
+        {
+            @:      @func.MethodName: function (options, filter, $scope) {
+            @:          var promise = core.dsDownload("/@func.Url", options, filter);
+            @:          disabledButtons(promise, $scope);
+            @:          addShowErrorDialogCatch(promise, this.ShowErrorDialog, $dialogs);
+            @:          return promise;
+            @:      },
         }
         else
         {
-@:      @func.MethodName: function (@func.ParametersString) {
-@:          var promise = $http({
-@:              url: "/@func.Url",
-@:              method: "@func.Method",
-                if (!string.IsNullOrEmpty(func.NonUriParam))
+            if (!string.IsNullOrEmpty(func.ParametersString))
             {
-@:              data: @func.NonUriParam,
-                }
+                @:  @func.MethodName: function (@func.ParametersString, $scope){
+            }
+            else
+            {
+                @:  @func.MethodName: function ($scope){
+            }
+            @:          var promise = $http({
+            @:              url: "/@func.Url",
+            @:              method: "@func.Method",
+            if (!string.IsNullOrEmpty(func.NonUriParam))
+            {
+                @:              data: @func.NonUriParam,
+            }
             if (!string.IsNullOrEmpty(func.Params))
             {
-@:              params: @func.Params,
-                }
-@:              });
-            @* Обработка ошибок *@
-@:          AddShowErrorDialogCatch(promise, this.ShowErrorDialog, $dialogs);
-@:          return promise;
-@:        },
+                @:              params: @func.Params,
+            }
+            @:              });
+            @:          disabledButtons(promise, $scope);
+            @:          addShowErrorDialogCatch(promise, this.ShowErrorDialog, $dialogs);
+            @:          return promise;
+            @:      },
         }
     }
-@:  };
-@:  }]);
+    @:  };
+    @:  }]);
 
 }
-

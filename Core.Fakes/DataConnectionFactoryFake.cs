@@ -1,5 +1,5 @@
 ﻿using Core.Internal.LinqToDB;
-using Core.LinqToDB.Interfaces;
+using Core.Services;
 using LightInject;
 using System;
 using System.Collections.Generic;

@@ -2,7 +2,11 @@
 function ($scope, $http, $state, $dialogs, tableTemplateGridService) {
     //tableTemplateGridService.ShowErrorDialog = false;
 
+    $scope.startDT = new Date(2018, 3, 1);
+    $scope.endDT = new Date(2018, 3, 30);
+
     $scope.dsReadCount = 0;
+    $scope.options = undefined;
 
     //#region ==============  Элемент управления для отображения Главного Грида
     $scope.source = new kendo.data.DataSource({
@@ -15,6 +19,7 @@ function ($scope, $http, $state, $dialogs, tableTemplateGridService) {
 
         transport: {
             read: function (options) {
+                $scope.options = options;
                 var filter = {};
                 tableTemplateGridService.GetList(options, filter)
                     .then(
@@ -26,16 +31,28 @@ function ($scope, $http, $state, $dialogs, tableTemplateGridService) {
             }
         },
         requestEnd: function (e) {
-        }
+        },
+        aggregate: [{ field: "Rate", aggregate: "sum" }]
     });
 
     $scope.mainGridOptions = {
         dataSource: $scope.source,
-        // pageable: true,
+        pageable: true,
         sortable: true,
         filterable: true,
         resizable: true,
         rowTemplate: $("#row-template").html(),
+        columns: [{ field: "DateFrom", title: "Дата с" },
+            { field: "Rate", title: "toLocaleString('ru-RU')" },
+            { field: "Rate", title: "без форматирования", aggregates: ["sum"], footerTemplate: "Sum: #=sum#" },
+            { field: "Rate", title: "number"},
+            { field: "Rate", title: "numberRu:4" },
+            { field: "Rate", title: "numberRu:2" },
+            { field: "Rate", title: "numberRu:0" },
+            { field: "Rate", title: "numberRu" },
+            { field: "Rate", title: "Комментарий"},
+            { title: "Действие"}
+        ]
     };
     //#endregion =================================
 
@@ -77,6 +94,17 @@ function ($scope, $http, $state, $dialogs, tableTemplateGridService) {
         tableTemplateGridService.GetValidationException();
     }
 
-    //#endregion
+        //#endregion
+
+    $scope.downloadExcel = function ()
+    {
+        var filter = {};
+        var options = $scope.options;
+
+        options.data.filterDto = filter;
+
+        tableTemplateGridService.DownloadExcel(options, filter);
+     
+    }
 
 }]);

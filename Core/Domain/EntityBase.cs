@@ -1,4 +1,6 @@
-﻿namespace Core.Domain
+﻿using LinqToDB.Mapping;
+
+namespace Core.Domain
 {
     /// <summary>
     /// Базовый класс для сущностей из бд.
@@ -9,5 +11,11 @@
         /// Идентификатор.
         /// </summary>
         public abstract int Id { get; set; }
+
+        /// <summary>
+        /// Идентификатор пользователя, внесшего изменения.
+        /// </summary>
+        [NotColumn]
+        public int LogUser_Id { get; set; }
     }
 }

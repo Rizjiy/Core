@@ -1,0 +1,36 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <h4>Вызовы тестовых сервисов</h4>
+    </div>
+    <div class="row">
+        <div class="col-xs-1">
+            <button type="button" class="btn btn-default btn-block" ng-click="excelExport()">ExcelExport</button>
+        </div>
+    </div>
+    <div class="row">
+        {{contentInfo}}
+    </div>
+</div>
+<!-- Страница редактирования чего либо -->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">{{progressMassage}}</h4>
+        </div>
+        <form class="modal-body" kendo-validator="validator">
+            <div class="row">
+                <div class="col-xs-3">
+                    <label>Таймаут (сек): </label>
+                </div>
+                <input name="timeoutInput"
+                       kendo-numeric-text-box
+                       k-ng-model="item.Timeout"
+                       class="width250px"
+                       required validationMessage="Укажите число" />
+            </div>
+            <fieldset class="modal-footer" ng-disabled="inProgress">
+                <button type="submit" class="btn btn-primary" ng-click="save($event)">Сохранить</button>
+            </fieldset>
+        </form>
+    </div>
+</div>

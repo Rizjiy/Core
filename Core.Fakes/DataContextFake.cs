@@ -12,7 +12,8 @@ using LightInject;
 using LinqToDB.Mapping;
 using Core.Utils;
 using Core.Domain;
-using Core.LinqToDB.Interfaces;
+using Core.Services;
+using Core.Utils.CustomeException;
 
 namespace Core.Fakes
 {
@@ -49,15 +50,15 @@ namespace Core.Fakes
 
         #region DataConnectionExtensions
 
-        public BulkCopyRowsCopied BulkCopy<T>(BulkCopyOptions options, IEnumerable<T> source)
+        public BulkCopyRowsCopied BulkCopy<T>(BulkCopyOptions options, IEnumerable<T> source) where T: class
         {
             return _dataConnection.BulkCopy<T>(options, source);
         }
-        public BulkCopyRowsCopied BulkCopy<T>(IEnumerable<T> source)
+        public BulkCopyRowsCopied BulkCopy<T>(IEnumerable<T> source) where T : class
         {
             return _dataConnection.BulkCopy<T>(source);
         }
-        public BulkCopyRowsCopied BulkCopy<T>(int maxBatchSize, IEnumerable<T> source)
+        public BulkCopyRowsCopied BulkCopy<T>(int maxBatchSize, IEnumerable<T> source) where T : class
         {
             return _dataConnection.BulkCopy<T>(maxBatchSize, source);
         }
@@ -231,7 +232,23 @@ namespace Core.Fakes
 
         public object InsertWithIdentity<T>(T obj)
         {
-            return _dataConnection.InsertWithIdentity<T>(obj);
+            //Делаем только для EntityBase
+            var entity = obj as EntityBase;
+            if (entity == null)
+                throw new InvalidCastException($"Метод работает только с типом EntityBase. Type:{obj.GetType()}");
+
+            int maxIndex = 0;
+
+            //Ищем последнюю запись
+            var list = GetList<T>();
+            if (list.Any())
+                maxIndex = list.Cast<EntityBase>().Select(e => e.Id).Max();
+
+            entity.Id = ++maxIndex;
+
+            list.Add(obj);
+
+            return maxIndex;
         }
 
         public int Update<T>(T obj)
@@ -258,12 +275,12 @@ namespace Core.Fakes
 
         public DataConnectionTransaction BeginTransaction()
         {
-            return new DataConnectionTransaction(new DataConnection());
+            return new DataConnectionTransaction(new DataConnection(new FakeDataProvider(), String.Empty));
         }
 
         public DataConnectionTransaction BeginTransaction(System.Data.IsolationLevel isolationLevel)
         {
-            return new DataConnectionTransaction(new DataConnection());
+            return new DataConnectionTransaction(new DataConnection(new FakeDataProvider(),String.Empty));
         }
 
         public void CommitTransaction()

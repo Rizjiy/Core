@@ -5,3 +5,21 @@
 1.2.0
 - CN SpecialActionEntityController пометить аттрибутом IgnoreServiceGenAttribute
 - удалить nuget пакет BundlerMinifie
+
+1.2.8
+- CN ClientTurnoverRubleReportController убрать атребут IgnoreServiceGen. ”далить js сервис
+
+1.2.9
+- ќбновлен AngularJS до версии 1.6.6
+- ƒобавлена библиотека FileSaver.min.js (убрать из проектов)
+
+1.2.26 
+- добавлена русификаци€ https://code.angularjs.org/1.6.9/i18n/angular-locale_ru-ru.js
+- обновлен angularJs https://code.angularjs.org/1.6.9/angular.min.js
+- добавлена библиотека https://code.angularjs.org/1.6.9/angular-sanitize.min.js 
+
+2018-08-11
+- стереть содержимое в core.extensions.additional.js
+
+2018-11-09
+- выпилить из проекта WebBcl стиль .not-active {

@@ -69,6 +69,21 @@ namespace Core.Utils.Linq2Db
             return Guid.NewGuid();
         }
 
+        /// <summary>
+        /// Если IQueryable<T> объект, на котором вызывается, реализует ITable<T>, 
+        /// то к сгенерированному SQL для названия таблицы добавляется хинт WITH(<args>). 
+        /// В противном случае возвращается без изменений исходный IQueryable<T>.   
+        /// </summary>
+        /// <typeparam name="T">тип объекта сущности данных</typeparam>
+        /// <param name="query">исходный запрос</param>
+        /// <param name="args">хинт строкой. Эта строка 1 в 1 вставится внутрь выражения WITH(<args>)</param>
+        /// <returns>результирущий запрос</returns>
+        public static IQueryable<T> With<T>(this IQueryable<T> query, string args) where T : class
+        {
+            ITable<T> table = query as ITable<T>;
+
+            return table != null ? LinqExtensions.With(table, args) : query;
+        }
 
     }
 }

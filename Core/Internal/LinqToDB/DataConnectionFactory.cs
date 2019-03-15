@@ -3,7 +3,8 @@ using System.Collections.Concurrent;
 using System.Linq;
 using Core.Internal.Dependency;
 using LinqToDB.Data;
-using Core.LinqToDB.Interfaces;
+using Core.Services;
+
 #if DEBUG
 using System.Threading;
 using System.Diagnostics;
