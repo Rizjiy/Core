@@ -80,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\CRUD\CrudEntity.cs" />
     <Compile Include="Tests\CRUD\CrudTests.cs" />
+    <Compile Include="Tests\CRUD\HintTest.cs" />
     <Compile Include="Tests\Extensions\EnumDisplayNameTests.cs" />
     <Compile Include="Tests\Extensions\PersonEntityService.cs" />
     <Compile Include="Tests\GetQueryResultDtoTests\CarEntity.cs" />

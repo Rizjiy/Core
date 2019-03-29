@@ -314,5 +314,9 @@ namespace Core.Fakes
             return table;
         }
 
+        public void QueryHint(string hint)
+        {
+           
+        }
     }
 }

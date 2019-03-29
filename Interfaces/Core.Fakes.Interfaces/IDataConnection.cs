@@ -12,6 +12,7 @@ namespace Core.Services
     {
         int CommandTimeout { get; set; }
 
+        void QueryHint(string hint);
         DataConnectionTransaction BeginTransaction();
         DataConnectionTransaction BeginTransaction(IsolationLevel isolationLevel);
         BulkCopyRowsCopied BulkCopy<T>(BulkCopyOptions options, IEnumerable<T> source) where T: class;

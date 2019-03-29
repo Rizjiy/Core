@@ -42,6 +42,12 @@ namespace Core.Internal.LinqToDB
             _dataConnection.MappingSchema.ColumnNameComparer = StringComparer.OrdinalIgnoreCase;
         }
 
+        public void QueryHint(string hint)
+        {
+            _dataConnection.QueryHints.Add(hint);
+        }
+
+
         public IQueryable<T> GetTable<T>() where T : class
         {
             return _dataConnection.GetTable<T>();

@@ -2,7 +2,7 @@
 <package xmlns:auto-ns1="http://www.w3.org/1999/xhtml" xmlns:tns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd" xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
 <metadata>
 <id>Core.Fakes</id>
-<version>0.0.96</version>
+<version>0.0.97</version>
 <authors>lukich</authors>
 <requireLicenseAcceptance>false</requireLicenseAcceptance>
 <description>Fakes for Linq2Db Context in Core by Rikhter project</description>
